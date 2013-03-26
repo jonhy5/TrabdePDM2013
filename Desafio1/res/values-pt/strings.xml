@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Desafio 1</string>
+    <string name="button_text">Troca</string>
+    <string name="on">Ligado</string>
+    <string name="off">Desligado</string>
+</resources>
