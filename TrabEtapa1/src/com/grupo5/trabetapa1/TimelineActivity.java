@@ -11,6 +11,7 @@ public class TimelineActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
 		//Alteração para verificar o repositorio
+		//Segunda alteração 
 	}
 
 	@Override
