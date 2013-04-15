@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Yamba 5</string>
+    <string name="action_settings">Preferencias</string>
+    <string name="hello_world">Olá Mundo!</string>
+    <string name="title_activity_status">Actividade de Estado</string>
+    <string name="status_button_title">Submeter</string>
+    <string name="txVw1_text">Caracteres que disponíveis</string>
+    <string name="title_activity_preferences">Actividade de Preferencias</string>
+    <string name="title_activity_detailed">Actividade de Detalhe</string>
+    <string name="actBar_Menu_timeline">Cronograma</string>
+    <string name="actBar_Menu_Status">Estado</string>
+    <string name="actBar_Menu_Preferences">Preferencias</string>
+    <string name="actBar_Menu_timeline_cond">Crono</string>
+    <string name="actBar_Menu_Status_cond">Est</string>
+    <string name="actBar_Menu_Preferences_cond">Pref</string>
+</resources>
