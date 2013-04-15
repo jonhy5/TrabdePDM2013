@@ -4,5 +4,11 @@ import winterwell.jtwitter.Twitter;
 import android.app.Application;
 
 public class YambApplication extends Application {
-	Twitter twitter = new Twitter();
+	Twitter twitter;
+
+	public void onCreate() {
+		super.onCreate();
+		twitter = new Twitter("student", "password");
+		twitter.setAPIRootUrl("http://yamba.marakana.com/api");
+	}
 }
