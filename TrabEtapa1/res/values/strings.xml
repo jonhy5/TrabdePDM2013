@@ -4,5 +4,9 @@
     <string name="app_name">Yamba 5</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_status">StatusActivity</string>
+    <string name="status_button_title">Submit</string>
+    <string name="txVw1_text">Number of Character left</string>
+    <string name="txVw2_text">360</string>
 
 </resources>
