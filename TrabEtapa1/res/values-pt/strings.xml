@@ -8,6 +8,7 @@
     <string name="txVw1_text">Caracteres que disponíveis</string>
     <string name="title_activity_preferences">Actividade de Preferencias</string>
     <string name="title_activity_detailed">Actividade de Detalhe</string>
+    <string name="title_activity_base">Actividade Base</string>
     <string name="actBar_Menu_timeline">Cronograma</string>
     <string name="actBar_Menu_Status">Estado</string>
     <string name="actBar_Menu_Preferences">Preferencias</string>
