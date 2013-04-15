@@ -14,14 +14,14 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.grupo5.trabetapa1.TimelineActivity"
+            android:name="com.grupo5.trabetapa1.activities.TimelineActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.grupo5.trabetapa1.StatusActivity"
+            android:name="com.grupo5.trabetapa1.activities.StatusActivitytusActivity"
             android:label="@string/title_activity_status" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.grupo5.trabetapa1.PreferencesActivity"
+            android:name="com.grupo5.trabetapa1.activities.PreferencesActivitycesActivity"
             android:label="@string/title_activity_preferences" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.grupo5.trabetapa1.DetailedActivity"
+            android:name="com.grupo5.trabetapa1.activities.DetailedActivity"
             android:label="@string/title_activity_detailed" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,7 +48,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.grupo5.trabetapa1.BaseActivity"
+            android:name="com.grupo5.trabetapa1.activities.BaseActivityaseActivity"
             android:label="@string/title_activity_base" >
         </activity>
     </application>

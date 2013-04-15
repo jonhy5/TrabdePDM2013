@@ -1,4 +1,9 @@
-package com.grupo5.trabetapa1;
+package com.grupo5.trabetapa1.activities;
+
+import com.grupo5.trabetapa1.R;
+import com.grupo5.trabetapa1.R.id;
+import com.grupo5.trabetapa1.R.layout;
+import com.grupo5.trabetapa1.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;
