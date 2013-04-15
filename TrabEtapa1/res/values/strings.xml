@@ -13,5 +13,7 @@
     <string name="actBar_Menu_timeline">Timeline</string>
     <string name="actBar_Menu_Status">Status</string>
     <string name="actBar_Menu_Preferences">Preferences</string>
-
+	<string name="actBar_Menu_timeline_cond">TmLine</string>
+    <string name="actBar_Menu_Status_cond">St</string>
+    <string name="actBar_Menu_Preferences_cond">Pref</string>
 </resources>
