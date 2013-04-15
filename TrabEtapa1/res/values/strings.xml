@@ -8,5 +8,6 @@
     <string name="status_button_title">Submit</string>
     <string name="txVw1_text">Number of Character left</string>
     <string name="txVw2_text">360</string>
+    <string name="title_activity_preferences">PreferencesActivity</string>
 
 </resources>
