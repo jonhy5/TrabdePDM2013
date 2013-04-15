@@ -30,7 +30,7 @@ public class StatusActivity extends Activity {
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.)
+		//switch(item.)
 		
 		if(item.getItemId() == R.id.Timeline){
 			Intent inten = new Intent(StatusActivity.this,TimelineActivity.class);

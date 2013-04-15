@@ -9,5 +9,9 @@
     <string name="txVw1_text">Number of Character left</string>
     <string name="txVw2_text">360</string>
     <string name="title_activity_preferences">PreferencesActivity</string>
+    <string name="title_activity_detailed">DetailedActivity</string>
+    <string name="actBar_Menu_timeline">Timeline</string>
+    <string name="actBar_Menu_Status">Status</string>
+    <string name="actBar_Menu_Preferences">Preferences</string>
 
 </resources>
