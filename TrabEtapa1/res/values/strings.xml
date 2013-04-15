@@ -13,5 +13,6 @@
     <string name="actBar_Menu_timeline">Timeline</string>
     <string name="actBar_Menu_Status">Status</string>
     <string name="actBar_Menu_Preferences">Preferences</string>
+    <string name="title_activity_base">BaseActivity</string>
 
 </resources>

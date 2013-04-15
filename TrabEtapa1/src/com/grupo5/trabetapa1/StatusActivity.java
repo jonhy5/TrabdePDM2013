@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class StatusActivity extends Activity {
+public class StatusActivity extends BaseActivity {
 
 	
 	@Override
@@ -30,14 +30,6 @@ public class StatusActivity extends Activity {
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item){
-		//switch(item.)
-		
-		if(item.getItemId() == R.id.Timeline){
-			Intent inten = new Intent(StatusActivity.this,TimelineActivity.class);
-			startActivity(inten);
-			return true;
-		}
-		else
-		return false;
+		return super.onOptionsItemSelected(item);	
 	}
 }
