@@ -15,4 +15,10 @@
     <string name="actBar_Menu_timeline_cond">Crono</string>
     <string name="actBar_Menu_Status_cond">Est</string>
     <string name="actBar_Menu_Preferences_cond">Pref</string>
+    <string name="UserName_text">Nome de Utilizador</string>
+    <string name="PassWord_text">Palavra Chave</string>
+    <string name="URI_text">Uri Base</string>
+    <string name="MaxMensOnTimeLine_text">Num max de mensagens no Cronograma</string>
+  	<string name="MaxcharactersbyMsg_text">Num max de caracteres em cada  mensagem</string>
+  	<string name="ApplyPref_button">Aceitar</string>
 </resources>

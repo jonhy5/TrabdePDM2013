@@ -8,9 +8,111 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".PreferencesActivity" >
 
-    <TextView
+    <Button
+        android:id="@+id/but1_PrefApply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentBottom="true"
+        android:text="@string/ApplyPref_button" />
+
+    <TextView
+        android:id="@+id/UserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/but1_PrefApply"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/UserName_text"
+        android:text="@string/UserName_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/User"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/UserName"
+        android:layout_below="@+id/UserName"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/PassWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/User"
+        android:layout_below="@+id/User"
+        android:layout_marginTop="15dp"
+        android:contentDescription="@string/PassWord_text"
+        android:text="@string/PassWord_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/Pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/PassWord"
+        android:layout_below="@+id/PassWord"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/URI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Pass"
+        android:layout_below="@+id/Pass"
+        android:layout_marginTop="16dp"
+        android:text="@string/URI_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/baseURI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/URI"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/MaxMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/baseURI"
+        android:layout_marginTop="15dp"
+        android:text="@string/MaxMensOnTimeLine_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/MaxNumMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/MaxMsg"
+        android:layout_below="@+id/MaxMsg"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/MaxCharInMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/MaxNumMsg"
+        android:layout_below="@+id/MaxNumMsg"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/NumCharInMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/MaxCharInMsg"
+        android:text="@string/MaxcharactersbyMsg_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/NumChar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/MaxCharInMsg"
+        android:layout_below="@+id/NumCharInMsg"
+        android:ems="10" />
 
 </RelativeLayout>

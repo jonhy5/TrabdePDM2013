@@ -17,4 +17,11 @@
 	<string name="actBar_Menu_timeline_cond">TmLine</string>
     <string name="actBar_Menu_Status_cond">St</string>
     <string name="actBar_Menu_Preferences_cond">Pref</string>
+    <string name="UserName_text">UserName</string>
+    <string name="PassWord_text">PassWord</string>
+    <string name="URI_text">Base Uri</string>
+    <string name="MaxMensOnTimeLine_text">Max massages on the Timeline</string>
+    <string name="MaxcharactersbyMsg_text">Max characters on each message</string>
+    <string name="ApplyPref_button">Apply</string>
+    
 </resources>

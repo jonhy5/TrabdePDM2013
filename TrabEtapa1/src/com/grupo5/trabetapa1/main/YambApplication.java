@@ -5,4 +5,5 @@ import android.app.Application;
 
 public class YambApplication extends Application {
 	Twitter twitter = new Twitter();
+	public static final String preferencesFileName = "ClientPrefs";
 }

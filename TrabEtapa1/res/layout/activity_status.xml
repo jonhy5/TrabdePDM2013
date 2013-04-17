@@ -9,7 +9,7 @@
     tools:context=".StatusActivity" >
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/User"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -23,7 +23,7 @@
         android:id="@+id/txVw1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
+        android:layout_below="@+id/User"
         android:text="@string/txVw1_text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
