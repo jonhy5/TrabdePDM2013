@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/Timeline" android:enabled="true" android:titleCondensed="@string/actBar_Menu_timeline_cond" android:visible="true" android:checkable="false" android:showAsAction="always" android:menuCategory="system" android:title="@string/actBar_Menu_timeline" android:checked="false"></item>
-    <item android:id="@+id/Status" android:enabled="true" android:titleCondensed="@string/actBar_Menu_Status_cond" android:orderInCategory="1" android:visible="true" android:checkable="false" android:menuCategory="system" android:title="@string/actBar_Menu_Status" android:checked="false" android:showAsAction="always"></item>
-    <item android:id="@+id/preferences" android:enabled="true" android:titleCondensed="@string/actBar_Menu_Preferences_cond" android:visible="true" android:checkable="false" android:showAsAction="always" android:menuCategory="system" android:title="@string/actBar_Menu_Preferences" android:checked="false"></item> 
+    <item android:id="@+id/preferences" android:enabled="true" android:titleCondensed="@string/actBar_Menu_Preferences_cond" android:visible="true" android:checkable="false" android:showAsAction="always" android:menuCategory="system" android:title="@string/actBar_Menu_Preferences" android:checked="false"></item><item android:id="@+id/Status" android:enabled="true" android:titleCondensed="@string/actBar_Menu_Status_cond" android:orderInCategory="1" android:visible="true" android:checkable="false" android:menuCategory="system" android:title="@string/actBar_Menu_Status" android:checked="false" android:showAsAction="always"></item>
+     
 
 </menu>

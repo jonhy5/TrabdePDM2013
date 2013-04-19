@@ -34,9 +34,13 @@ public class BaseActivity extends Activity {
 			startActivity(inten);
 			return true;}
 		 
-		 case R.id.preferences:{Intent inten = new Intent(this,PreferencesActivity.class);
-			startActivity(inten);
-			return true;}
+		 case R.id.preferences:{
+			 //Intent inten = new Intent(this,PreferencesActivity.class);
+			//startActivity(inten);
+			//return true;}
+			 Intent inten = new Intent(this,TimelineActivity.class);
+				startActivity(inten);
+				return true;}
 		 	default : return super.onOptionsItemSelected(item);
 		 }
 	}

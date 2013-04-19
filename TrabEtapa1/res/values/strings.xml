@@ -23,5 +23,6 @@
     <string name="MaxMensOnTimeLine_text">Max massages on the Timeline</string>
     <string name="MaxcharactersbyMsg_text">Max characters on each message</string>
     <string name="ApplyPref_button">Apply</string>
+    <string name="timeline_list">Timeline list</string>
     
 </resources>
