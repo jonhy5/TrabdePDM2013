@@ -17,18 +17,17 @@ import android.view.View;
 import android.widget.Button;
 
 public class StatusActivity extends BaseActivity {
-
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);	
+		
+		this.setTitle(R.string.title_activity_status);
 		setContentView(R.layout.activity_status);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		
 		getMenuInflater().inflate(R.menu.actionbar_menu, menu);
 		return true;
 	}

@@ -6,6 +6,7 @@ import android.app.Application;
 public class YambApplication extends Application {
 	Twitter twitter;
 	public static final String preferencesFileName = "ClientPrefs";
+	
 	public void onCreate() {
 		super.onCreate();
 		twitter = new Twitter("student", "password");

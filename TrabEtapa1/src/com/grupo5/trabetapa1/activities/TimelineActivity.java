@@ -31,11 +31,11 @@ public class TimelineActivity extends BaseActivity {
 
 		
 		// Find views by id    
-		lv_Timeline = (ListView) findViewById(R.id.Timeline);
+		//lv_Timeline = (ListView) findViewById(R.id.Timeline);
 		
 		
-		String lista[] = new String[]{"Item - 1", "Item - 2", "Item - 3", "Item - 4"};
-		lv_Timeline.setAdapter(new TimelineAdapter(this, lista));
+		//String lista[] = new String[]{"Item - 1", "Item - 2", "Item - 3", "Item - 4"};
+		//lv_Timeline.setAdapter(new TimelineAdapter(this, lista));
 		
 	}
 
