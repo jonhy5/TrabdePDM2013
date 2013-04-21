@@ -8,8 +8,6 @@ import android.widget.BaseAdapter;
 
 public class TimelineAdapter extends BaseAdapter {
 
-	private LayoutInflater layoutInflater;
-
     String items[] = new String[]{"Item - 1", "Item - 2", "Item - 3", "Item - 4"};
 
 	private String[] itens;
