@@ -9,7 +9,6 @@
     <string name="action_settings">Settings</string>
     <string name="status_button_title">Submit</string>
     <string name="txVw1_text">Number of Character left</string>
-    <string name="txVw2_text">360</string>
     <string name="actBar_Menu_timeline">Timeline</string>
     <string name="actBar_Menu_Status">Status</string>
     <string name="actBar_Menu_Preferences">Preferences</string>
@@ -23,4 +22,7 @@
     <string name="MaxcharactersbyMsg_text">Max characters on each message</string>
     <string name="ApplyPref_button">Apply</string>
     <string name="timeline_list">Timeline list</string>
+    <string name="status_success_msg">Status successfully submited.</string>
+    <string name="status_error_msg">Failed to connect to twitter service.</string>
+    <string name="txVw2_text">140</string>
 </resources>

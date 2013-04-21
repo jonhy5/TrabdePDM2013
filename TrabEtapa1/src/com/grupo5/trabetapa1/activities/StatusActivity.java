@@ -1,28 +1,98 @@
 package com.grupo5.trabetapa1.activities;
 
-import com.grupo5.trabetapa1.R;
-import com.grupo5.trabetapa1.R.layout;
-import com.grupo5.trabetapa1.R.menu;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Intent;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.grupo5.trabetapa1.R;
+import com.grupo5.trabetapa1.interfaces.SubmitStatusListener;
+import com.grupo5.trabetapa1.main.YambApplication;
 
 public class StatusActivity extends BaseActivity {
+	public enum Status {COMPLETED, SENDING};
+	private static final String STATUSKEY = "StatusActivity_status";
+	private static final String TAG = YambApplication.class.getSimpleName();
+
+	private YambApplication application;
+	private int maxChars = 140; // TODO: Get Value from preferences
+	private Status status;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
+		Log.v(TAG, "onCreate() thread id = " + Thread.currentThread().getId());
 		
 		this.setTitle(R.string.title_activity_status);
 		setContentView(R.layout.activity_status);
+		
+		status = Status.COMPLETED;
+		
+		TextView textCounter = (TextView) findViewById(R.id.statusTextCounterTextView);
+		EditText statusText = (EditText) findViewById(R.id.statusEditText);
+		Button submitButton = (Button) findViewById(R.id.submitStatusButton);
+		
+		Log.i(TAG, getApplication().toString());
+		application = (YambApplication) getApplication();
+		
+		textCounter.setText(Integer.toString(maxChars)); 
+		
+		statusText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxChars)});
+		statusText.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				int count = maxChars - ((EditText) findViewById(R.id.statusEditText)).length();
+				((TextView) findViewById(R.id.statusTextCounterTextView)).setText(Integer.toString(count));
+				
+				if(status == Status.COMPLETED) {
+					((Button) findViewById(R.id.submitStatusButton)).setEnabled(((EditText) findViewById(R.id.statusEditText)).length() > 0);
+				} else {
+					((Button) findViewById(R.id.submitStatusButton)).setEnabled(false);
+				}
+			}
+		});
+	    
+		submitButton.setEnabled(false);
+		submitButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Log.i(TAG, "Submit button clicked");
+				
+				status = Status.SENDING;
+				((Button) findViewById(R.id.submitStatusButton)).setEnabled(false);
+				application.submitStatus(((EditText) findViewById(R.id.statusEditText)).getText().toString());
+			}
+		});
+		
+		application.setSubmitStatusListener(new SubmitStatusListener() {
+			@Override
+			public void completeReport(boolean success) {
+				String msg;
+				
+				if(success) {
+					msg = getResources().getString(R.string.status_success_msg);
+				} else {
+					msg = getResources().getString(R.string.status_error_msg);
+				}
+				Toast.makeText(StatusActivity.this, msg, Toast.LENGTH_SHORT).show();
+				status = Status.COMPLETED;
+				((Button) findViewById(R.id.submitStatusButton)).setEnabled(true);
+			}
+		});
 	}
 
 	@Override
@@ -32,7 +102,24 @@ public class StatusActivity extends BaseActivity {
 		return true;
 	}
 
-	public boolean onOptionsItemSelected(MenuItem item){
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
 		return super.onOptionsItemSelected(item);	
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		Log.v(TAG, "onSaveInstanceState()");
+		outState.putString(STATUSKEY, status.toString());
+		super.onSaveInstanceState(outState);
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		Log.v(TAG, "onRestoreInstanceState()");
+		
+		status = Status.valueOf(savedInstanceState.getString(STATUSKEY));
+		findViewById(R.id.submitStatusButton).setEnabled(status.compareTo(Status.COMPLETED) == 0);
 	}
 }

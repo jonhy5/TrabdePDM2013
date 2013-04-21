@@ -30,7 +30,7 @@ public class PreferencesActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				usr = (EditText)findViewById(R.id.User);
+				usr = (EditText)findViewById(R.id.statusEditText);
 				pass = (EditText)findViewById(R.id.Pass);
 				uri = (EditText)findViewById(R.id.baseURI);
 				maxmsg = (EditText) findViewById(R.id.MaxNumMsg);
