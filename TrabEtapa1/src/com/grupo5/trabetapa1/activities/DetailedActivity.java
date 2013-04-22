@@ -16,6 +16,12 @@ public class DetailedActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Log.v("","onCreatedetailed");
 		setContentView(R.layout.activity_detailed);
+		
+		Bundle x = getIntent().getExtras();
+		String msg =  x.getString("msg");
+		Log.v("",msg);
+		
+		
 	}
 
 	@Override

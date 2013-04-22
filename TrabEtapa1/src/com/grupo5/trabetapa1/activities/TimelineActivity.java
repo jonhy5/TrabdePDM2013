@@ -47,7 +47,7 @@ public class TimelineActivity extends BaseActivity {
 			        	Log.v(ACTIVITY_SERVICE, "onItemClick");
 
 			    		Intent intent = new Intent(TimelineActivity.this, DetailedActivity.class);
-			    			
+			    		intent.putExtra("msg", "qq coisa teste")	;
 
 			    		startActivity(intent);
 			        }
