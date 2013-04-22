@@ -27,7 +27,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
-        android:id="@+id/User"
+        android:id="@+id/statusEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/UserName"
@@ -41,8 +41,8 @@
         android:id="@+id/PassWord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/User"
-        android:layout_below="@+id/User"
+        android:layout_alignLeft="@+id/statusEditText"
+        android:layout_below="@+id/statusEditText"
         android:layout_marginTop="15dp"
         android:contentDescription="@string/PassWord_text"
         android:text="@string/PassWord_text"
@@ -75,7 +75,7 @@
         android:ems="10" />
 
     <TextView
-        android:id="@+id/MaxMsg"
+        android:id="@+id/timelineGridView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/baseURI"
@@ -87,8 +87,8 @@
         android:id="@+id/MaxNumMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/MaxMsg"
-        android:layout_below="@+id/MaxMsg"
+        android:layout_alignLeft="@+id/timelineGridView"
+        android:layout_below="@+id/timelineGridView"
         android:ems="10" />
 
     <TextView

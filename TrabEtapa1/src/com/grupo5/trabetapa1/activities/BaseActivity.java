@@ -1,15 +1,12 @@
 package com.grupo5.trabetapa1.activities;
 
-import com.grupo5.trabetapa1.R;
-import com.grupo5.trabetapa1.R.id;
-import com.grupo5.trabetapa1.R.layout;
-import com.grupo5.trabetapa1.R.menu;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.grupo5.trabetapa1.R;
 
 public class BaseActivity extends Activity {
 
@@ -25,20 +22,27 @@ public class BaseActivity extends Activity {
 		return true;
 	}
 	
-	public boolean onOptionsItemSelected(MenuItem item){
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent inten;
+		
 		switch(item.getItemId()){
-		 case R.id.Timeline:{Intent inten = new Intent(this,TimelineActivity.class);
-			startActivity(inten);
-			return true;}
-		 case R.id.Status:{Intent inten = new Intent(this,StatusActivity.class);
-			startActivity(inten);
-			return true;}
+			case R.id.Timeline:
+				inten = new Intent(this,TimelineActivity.class);
+				startActivity(inten);
+				return true;
+				
+			case R.id.Status:
+				inten = new Intent(this,StatusActivity.class);
+				startActivity(inten);
+				return true;
 		 
-		 case R.id.preferences:{Intent inten = new Intent(this,PreferencesActivity.class);
-			startActivity(inten);
-			return true;}
-		 	default : return super.onOptionsItemSelected(item);
-		 }
+			case R.id.preferences:
+				inten = new Intent(this,PreferencesActivity.class);
+				startActivity(inten);
+				return true;
+			
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
-
 }

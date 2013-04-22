@@ -9,7 +9,7 @@
     tools:context=".StatusActivity" >
 
     <EditText
-        android:id="@+id/User"
+        android:id="@+id/statusEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -23,21 +23,21 @@
         android:id="@+id/txVw1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/User"
+        android:layout_below="@+id/statusEditText"
         android:text="@string/txVw1_text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/txVw2"
+        android:id="@+id/statusTextCounterTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn1"
+        android:layout_above="@+id/submitStatusButton"
         android:layout_alignParentRight="true"
         android:text="@string/txVw2_text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
-        android:id="@+id/btn1"
+        android:id="@+id/submitStatusButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/txVw1"

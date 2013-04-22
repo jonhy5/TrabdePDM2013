@@ -9,16 +9,20 @@ import android.widget.*;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
 public class PreferencesActivity extends Activity {
-	private EditText usr;
-	private EditText pass;
-	private EditText uri;
-	private EditText maxmsg;
-	private EditText maxchar;
+	public static final String USERNAMEKEY = "UserName";
+	public static final String PASSWORDKEY = "PassWord";
+	public static final String BASEURIKEY = "BaseUri";
+	public static final String MAXMSGKEY = "MaxMsg";
+	public static final String MAXCHARKEY = "MaxChar";
+	private SharedPreferences pref;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,23 +33,21 @@ public class PreferencesActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				usr = (EditText)findViewById(R.id.User);
-				pass = (EditText)findViewById(R.id.Pass);
-				uri = (EditText)findViewById(R.id.baseURI);
-				maxmsg = (EditText) findViewById(R.id.MaxNumMsg);
-				maxchar = (EditText) findViewById(R.id.NumChar);
-				YambApplication.pref = getSharedPreferences(YambApplication.preferencesFileName, 0);
-				YambApplication.pref.edit().putString("UserName",usr.getText().toString());
-				YambApplication.pref.edit().putString("PassWord",pass.getText().toString());
-				YambApplication.pref.edit().putString("BaseUri",uri.getText().toString());
-				YambApplication.pref.edit().putString("MaxMsg",maxmsg.getText().toString());
-				YambApplication.pref.edit().putString("MaxChar",maxchar.getText().toString());
-				YambApplication.pref.edit().commit();
-				User u = YambApplication.twitter.getUser(YambApplication.pref.getString("UserName", "bad"));
+				// Save preferences
+				pref = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
+				Editor edit = pref.edit();
+				edit.clear();
+				edit.putString(USERNAMEKEY,((EditText) findViewById(R.id.statusEditText)).getText().toString());
+				edit.putString(PASSWORDKEY,((EditText) findViewById(R.id.Pass)).getText().toString());
+				edit.putString(BASEURIKEY,((EditText) findViewById(R.id.baseURI)).getText().toString());
+				edit.putString(MAXMSGKEY,((EditText) findViewById(R.id.MaxNumMsg)).getText().toString());
+				edit.putString(MAXCHARKEY,((EditText) findViewById(R.id.NumChar)).getText().toString());
+				edit.commit();
+				
+				// Redirect to Timeline activity
 				Intent inten = new Intent(PreferencesActivity.this,TimelineActivity.class);
 				startActivity(inten);
-			}
-			
+			}			
 		});
 	}
 

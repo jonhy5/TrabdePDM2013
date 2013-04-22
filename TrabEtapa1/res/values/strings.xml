@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Yamba 5</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="title_activity_status">Status</string>
+    <string name="title_activity_preferences">Preferences</string>
+    <string name="title_activity_detailed">Detailed</string>
+    <string name="title_activity_timeline">Timeline</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_status">StatusActivity</string>
     <string name="status_button_title">Submit</string>
     <string name="txVw1_text">Number of Character left</string>
-    <string name="txVw2_text">360</string>
-    <string name="title_activity_preferences">PreferencesActivity</string>
-    <string name="title_activity_detailed">DetailedActivity</string>
-    <string name="title_activity_base">BaseActivity</string>
     <string name="actBar_Menu_timeline">Timeline</string>
     <string name="actBar_Menu_Status">Status</string>
     <string name="actBar_Menu_Preferences">Preferences</string>
@@ -20,8 +18,14 @@
     <string name="UserName_text">UserName</string>
     <string name="PassWord_text">PassWord</string>
     <string name="URI_text">Base Uri</string>
-    <string name="MaxMensOnTimeLine_text">Max massages on the Timeline</string>
+    <string name="MaxMensOnTimeLine_text">Max messages on the Timeline</string>
     <string name="MaxcharactersbyMsg_text">Max characters on each message</string>
     <string name="ApplyPref_button">Apply</string>
-    
+    <string name="timeline_list">Timeline list</string>
+    <string name="status_success_msg">Status successfully submited.</string>
+    <string name="status_error_msg">Failed to connect to twitter service.</string>
+    <string name="messageColumnTitle">Message</string>
+    <string name="authorColumnTitle">Author</string>
+    <string name="dateColumnTitle">Date</string>
+    <string name="txVw2_text">140</string>
 </resources>
