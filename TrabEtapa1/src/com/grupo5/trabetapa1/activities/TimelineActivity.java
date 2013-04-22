@@ -46,10 +46,10 @@ public class TimelineActivity extends BaseActivity {
 
 			        	Log.v(ACTIVITY_SERVICE, "onItemClick");
 
-			    		//Intent intent = new Intent(this, DetailedActivity.class);
+			    		Intent intent = new Intent(TimelineActivity.this, DetailedActivity.class);
+			    			
 
-
-			    		//startActivity(intent);
+			    		startActivity(intent);
 			        }
 			    });
 

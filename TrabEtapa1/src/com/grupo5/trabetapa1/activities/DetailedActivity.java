@@ -6,6 +6,7 @@ import com.grupo5.trabetapa1.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 
 public class DetailedActivity extends Activity {
@@ -13,6 +14,7 @@ public class DetailedActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.v("","onCreatedetailed");
 		setContentView(R.layout.activity_detailed);
 	}
 
