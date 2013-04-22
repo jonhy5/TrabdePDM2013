@@ -46,8 +46,16 @@ public class TimelineActivity extends BaseActivity {
 
 			        	Log.v(ACTIVITY_SERVICE, "onItemClick");
 
+			        	Status status = (Status) arg0.getAdapter().getItem(position);
+			        	
+						
+			        	
 			    		Intent intent = new Intent(TimelineActivity.this, DetailedActivity.class);
-			    		intent.putExtra("msg", "qq coisa teste")	;
+			    		intent.putExtra("id", status.getId());
+			    		intent.putExtra("autor", status.getUser().toString());
+			    		intent.putExtra("msg", status.getText());
+			    		intent.putExtra("dt", status.getCreatedAt());
+			    		
 
 			    		startActivity(intent);
 			        }
