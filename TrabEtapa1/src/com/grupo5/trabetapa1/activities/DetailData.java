@@ -11,36 +11,33 @@ public class DetailData implements Parcelable {
 	private long id;
     private String autor;
 	private String msg;
-    private Date dt;
+    private long dt;
 
 	
-	protected static final Parcelable.Creator<DetailData> CREATOR = new Parcelable.Creator<DetailData>()
+	public static final Parcelable.Creator<DetailData> CREATOR = new Parcelable.Creator<DetailData>()
 	{
-        	public DetailData createFromParcel()
-        	{
-	            final DetailData d = new DetailData();
-	           
-	            return d;
-        	}
+		@Override
+    	public DetailData createFromParcel(Parcel in)
+    	{
+            return new DetailData(in);
+    	}
 
         public DetailData[] newArray(int size) {
             throw new UnsupportedOperationException();
         }
 
-		@Override
-		public DetailData createFromParcel(Parcel arg0) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
     };
 	
-	private DetailData()
+	public DetailData(Parcel in)
 	{
+		id = in.readLong();
+		autor = in.readString();
+		msg = in.readString();
+		dt = in.readLong();
 		
-	}
+    }
 	
-	public DetailData(long i, String a, String m,Date d)
+	public DetailData(long i, String a, String m, long d)
 	{
 			id = i;
 			autor = a;
@@ -64,7 +61,7 @@ public class DetailData implements Parcelable {
 	
 	public String getDate()
 	{
-		return dt.toString();
+		return new Date(dt).toString();
 	}
 	
 	@Override
@@ -74,8 +71,11 @@ public class DetailData implements Parcelable {
 	}
 
 	@Override
-	public void writeToParcel(Parcel out, int arg1) {
+	public void writeToParcel(Parcel out, int flags) {
+		out.writeLong(id);
+		out.writeString(autor);
 		out.writeString(msg);
+		out.writeLong(dt);
 
 		
 	}

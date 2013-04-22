@@ -38,7 +38,7 @@ public class TimelineActivity extends BaseActivity {
 			@Override
 			public void completeReport(List<Status> list) {
 				GridView gridView = (GridView) findViewById(R.id.timelineGridView);				
-				gridView.setAdapter(new TimelineAdapter(TimelineActivity.this, list.subList(0, maxListItems)));
+				gridView.setAdapter(new TimelineAdapter(TimelineActivity.this, list.subList(0, list.size()<maxListItems?list.size():maxListItems)));
 				
 				gridView.setOnItemClickListener(new OnItemClickListener() {
 			        @Override
@@ -54,7 +54,7 @@ public class TimelineActivity extends BaseActivity {
 			    		String msg = status.getText();
 			    		Date dt = (Date) status.getCreatedAt();
 			    		
-			    		DetailData d = new DetailData(nr, user, msg, dt );
+			    		DetailData d = new DetailData(nr, user, msg, dt.getTime() );
 			    		intent.putExtra("detail", d);
 
 			    		startActivity(intent);

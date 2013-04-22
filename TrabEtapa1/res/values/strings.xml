@@ -31,6 +31,8 @@
     <string name="Detail"></string>
     <string name="timeline_hours">Hours</string>
     <string name="timeline_Minutes">Minutes</string>
+    <string name="OK"></string>
+    <string name="btnOK">OK</string>
     <string name="timeline_Seconds">Seconds</string>
     <string name="Refresh_Button">Refresh</string>
     
