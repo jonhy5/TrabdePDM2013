@@ -1,12 +1,5 @@
 package com.grupo5.trabetapa1.activities;
 
-import winterwell.jtwitter.Twitter.User;
-
-import com.grupo5.trabetapa1.R;
-import com.grupo5.trabetapa1.main.YambApplication;
-
-import android.widget.*;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +7,11 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.grupo5.trabetapa1.R;
+import com.grupo5.trabetapa1.main.YambApplication;
 
 public class PreferencesActivity extends Activity {
 	public static final String USERNAMEKEY = "UserName";
@@ -22,7 +20,6 @@ public class PreferencesActivity extends Activity {
 	public static final String MAXMSGKEY = "MaxMsg";
 	public static final String MAXCHARKEY = "MaxChar";
 	private SharedPreferences pref;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +47,7 @@ public class PreferencesActivity extends Activity {
 				edit.putString(MAXCHARKEY,((EditText) findViewById(R.id.NumChar)).getText().toString());
 				edit.commit();
 				
-				// Redirect to Timeline activity
-				Intent inten = new Intent(PreferencesActivity.this,TimelineActivity.class);
-				startActivity(inten);
+				finish();
 			}			
 		});
 	}

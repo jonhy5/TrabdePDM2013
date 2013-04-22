@@ -19,24 +19,20 @@ public class DetailedActivity extends Activity {
 		setContentView(R.layout.activity_detailed);
 		
 		Bundle bundle = getIntent().getExtras();
-		String Id =  bundle.getString("id");
-		String autor = bundle.getString("autor");
-		String msg = bundle.getString("msg");
-		String date = bundle.getString("dt");
-		
+		DetailData d =  (DetailData)bundle.getParcelable("detail");
 		
 		
 		TextView txtid =(TextView) findViewById(R.id.textIdSeq);
-		txtid.setText(Id);
+		txtid.setText(d.getId());
 		
 		TextView txtautor =(TextView) findViewById(R.id.textAutor);
-		txtautor.setText(autor);
+		txtautor.setText(d.getAutor());
 		
 		TextView txtmsg =(TextView) findViewById(R.id.txtMsg);
-		txtmsg.setText(msg);
+		txtmsg.setText(d.getMsg());
 		
 		TextView txtDt =(TextView) findViewById(R.id.textDt);
-		txtDt.setText(date);
+		txtDt.setText(d.getDate());
 		
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.Twitter.Status;
 import android.app.Application;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.AsyncTask;
@@ -32,6 +33,12 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		
 		prefs = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
 		prefs.registerOnSharedPreferenceChangeListener(this);
+		
+		if(!prefs.contains(PreferencesActivity.USERNAMEKEY)) {
+			Intent newActivity = new Intent(this, PreferencesActivity.class);
+			newActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(newActivity);
+		}
 	}
 	
 	public synchronized Twitter getTwitter() {
@@ -114,5 +121,4 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			twitter = null;
 		}
 	}
-	
 }
