@@ -1,5 +1,7 @@
 package com.grupo5.trabetapa1.activities;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.grupo5.trabetapa1.R;
@@ -14,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class TimelineAdapter extends BaseAdapter {
+	private static final int NUMOFCHAR = 10;
 	private Context context;
 	private final List<Status> list;
 
@@ -49,9 +52,15 @@ public class TimelineAdapter extends BaseAdapter {
 			gridView = inflater.inflate(R.layout.timeline_row, null);
 			
 			Status status = list.get(position);
-			((TextView) gridView.findViewById(R.id.messageColumnTextView)).setText(status.getText());
+			String msg = status.getText();
+			Date dt = status.getCreatedAt();
+			Date dtAct =  Calendar.getInstance().getTime();
+			if(status.getText().length() > NUMOFCHAR){
+				msg = msg.substring(0, NUMOFCHAR-3)+"...";
+			}
+			((TextView) gridView.findViewById(R.id.messageColumnTextView)).setText(msg);
 			((TextView) gridView.findViewById(R.id.authorColumnTextView)).setText(status.getUser().getName());
-			((TextView) gridView.findViewById(R.id.dateColumnTextView)).setText(status.getCreatedAt().toString());
+			((TextView) gridView.findViewById(R.id.dateColumnTextView)).setText(dt.toString());
 			
 		} else {
 			gridView = (View) convertView;

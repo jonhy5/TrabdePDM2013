@@ -9,12 +9,17 @@
         android:id="@+id/messageColumnTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:text="@string/messageColumnTitle" />
+
 	<TextView
-        android:id="@+id/authorColumnTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/authorColumnTitle" />
+	    android:id="@+id/authorColumnTextView"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginRight="@dimen/activity_horizontal_margin"
+	    
+	    android:text="@string/authorColumnTitle" />
+
 	<TextView
         android:id="@+id/dateColumnTextView"
         android:layout_width="wrap_content"
