@@ -12,6 +12,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -53,14 +54,26 @@ public class TimelineAdapter extends BaseAdapter {
 			
 			Status status = list.get(position);
 			String msg = status.getText();
-			Date dt = status.getCreatedAt();
-			Date dtAct =  Calendar.getInstance().getTime();
+			String date;
+			long seg = (new Date().getTime() - status.getCreatedAt().getTime()) / 1000;
+			if(seg < 60){
+				date = seg+" "+context.getString(R.string.timeline_Seconds);
+			}
+			else if(seg<3600){
+				date = (seg/60)+" "+context.getString(R.string.timeline_Minutes);
+			}
+			else if(seg<(3600*60)){
+				date = (seg/(3600*60))+" "+context.getString(R.string.timeline_hours);
+			}
+			else 
+				date = (seg/(3600*60*24))+" Dias";
+			
 			if(status.getText().length() > NUMOFCHAR){
 				msg = msg.substring(0, NUMOFCHAR-3)+"...";
 			}
 			((TextView) gridView.findViewById(R.id.messageColumnTextView)).setText(msg);
 			((TextView) gridView.findViewById(R.id.authorColumnTextView)).setText(status.getUser().getName());
-			((TextView) gridView.findViewById(R.id.dateColumnTextView)).setText(dt.toString());
+			((TextView) gridView.findViewById(R.id.dateColumnTextView)).setText(date);
 			
 		} else {
 			gridView = (View) convertView;

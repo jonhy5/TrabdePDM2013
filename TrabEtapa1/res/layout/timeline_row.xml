@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:maxWidth="@dimen/MaxSizeOfColumm"
         android:text="@string/messageColumnTitle" />
 
 	<TextView
@@ -17,12 +18,14 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_marginRight="@dimen/activity_horizontal_margin"
-	    
+	    android:maxWidth="@dimen/MaxSizeOfColumm"
 	    android:text="@string/authorColumnTitle" />
 
 	<TextView
-        android:id="@+id/dateColumnTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dateColumnTitle" />
+	    android:id="@+id/dateColumnTextView"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:maxWidth="@dimen/MaxSizeOfColumm"
+	    android:text="@string/dateColumnTitle" />
+
 </LinearLayout>

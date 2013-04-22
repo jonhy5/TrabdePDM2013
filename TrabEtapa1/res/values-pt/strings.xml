@@ -26,4 +26,8 @@
     <string name="messageColumnTitle">Mensagem</string>
     <string name="authorColumnTitle">Autor</string>
     <string name="dateColumnTitle">Data</string>
+     <string name="timeline_hours">Horas</string>
+    <string name="timeline_Minutes">Minutos</string>
+    <string name="timeline_Seconds">Segundos</string>
+    <string name="Refresh_Button">Atualizar</string>
 </resources>

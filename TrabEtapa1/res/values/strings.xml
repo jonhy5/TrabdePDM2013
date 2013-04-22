@@ -29,4 +29,10 @@
     <string name="dateColumnTitle">Date</string>
     <string name="txVw2_text">140</string>
     <string name="Detail"></string>
+    <string name="timeline_hours">Hours</string>
+    <string name="timeline_Minutes">Minutes</string>
+    <string name="timeline_Seconds">Seconds</string>
+    <string name="Refresh_Button">Refresh</string>
+    
+    
 </resources>
