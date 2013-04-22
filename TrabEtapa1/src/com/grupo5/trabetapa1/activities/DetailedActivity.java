@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.TextView;
 
 public class DetailedActivity extends Activity {
 
@@ -17,10 +18,25 @@ public class DetailedActivity extends Activity {
 		Log.v("","onCreatedetailed");
 		setContentView(R.layout.activity_detailed);
 		
-		Bundle x = getIntent().getExtras();
-		String msg =  x.getString("msg");
-		Log.v("",msg);
+		Bundle bundle = getIntent().getExtras();
+		String Id =  bundle.getString("id");
+		String autor = bundle.getString("autor");
+		String msg = bundle.getString("msg");
+		String date = bundle.getString("dt");
 		
+		
+		
+		TextView txtid =(TextView) findViewById(R.id.textIdSeq);
+		txtid.setText(Id);
+		
+		TextView txtautor =(TextView) findViewById(R.id.textAutor);
+		txtautor.setText(autor);
+		
+		TextView txtmsg =(TextView) findViewById(R.id.txtMsg);
+		txtmsg.setText(msg);
+		
+		TextView txtDt =(TextView) findViewById(R.id.textDt);
+		txtDt.setText(date);
 		
 	}
 

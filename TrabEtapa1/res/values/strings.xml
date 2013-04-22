@@ -28,4 +28,5 @@
     <string name="authorColumnTitle">Author</string>
     <string name="dateColumnTitle">Date</string>
     <string name="txVw2_text">140</string>
+    <string name="Detail"></string>
 </resources>
