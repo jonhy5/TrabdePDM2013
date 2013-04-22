@@ -10,7 +10,9 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Button;
 
+import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.interfaces.SubmitStatusListener;
 import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
@@ -94,6 +96,7 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		timelineTask = new AsyncTask<String, Void, List<Status>>() {
 			@Override
 			protected List<winterwell.jtwitter.Twitter.Status> doInBackground(String... user) {
+				
 				try {
 					List<winterwell.jtwitter.Twitter.Status> list = getTwitter().getUserTimeline(user[0]);
 			        return list;

@@ -11,9 +11,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.Button;
 
 import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
@@ -22,7 +24,8 @@ import com.grupo5.trabetapa1.main.YambApplication;
 public class TimelineActivity extends BaseActivity {
 	private int maxListItems;
 	private YambApplication application;
-	
+	private static final String TIMELINEKEY = "TimeLineActivity_status";
+	private StatusActivity.Status status;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,7 +33,8 @@ public class TimelineActivity extends BaseActivity {
 		setContentView(R.layout.activity_timeline);
 		Log.v(ACTIVITY_SERVICE, "Oncreate Timeline");
 
-		SharedPreferences pref = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
+		
+		final SharedPreferences pref = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
 		maxListItems = Integer.parseInt(pref.getString(PreferencesActivity.MAXMSGKEY, "20"));
 		
 		application = (YambApplication) getApplication();
@@ -39,32 +43,41 @@ public class TimelineActivity extends BaseActivity {
 			public void completeReport(List<Status> list) {
 				GridView gridView = (GridView) findViewById(R.id.timelineGridView);				
 				gridView.setAdapter(new TimelineAdapter(TimelineActivity.this, list.subList(0, list.size()<maxListItems?list.size():maxListItems)));
-				
-				gridView.setOnItemClickListener(new OnItemClickListener() {
-			        @Override
-			        public void onItemClick(AdapterView<?> adapterView, View arg1,int position, long id) {
+				status = StatusActivity.Status.COMPLETED;
+				((Button)findViewById(R.id.Btn_refresh)).setEnabled(true);
+			}
+		});
+		((GridView) findViewById(R.id.timelineGridView)).setOnItemClickListener(new OnItemClickListener() {
+	        @Override
+	        public void onItemClick(AdapterView<?> adapterView, View arg1,int position, long id) {
 
-			        	Log.v(ACTIVITY_SERVICE, "onItemClick");
+	        	Log.v(ACTIVITY_SERVICE, "onItemClick");
 
-			        	Status status = (Status) adapterView.getAdapter().getItem(position);
-			        	
-			    		Intent intent = new Intent(TimelineActivity.this, DetailedActivity.class);
-			    		long nr = status.getId();
-			    		String user = status.getUser().getName();
-			    		String msg = status.getText();
-			    		Date dt = (Date) status.getCreatedAt();
-			    		
-			    		DetailData d = new DetailData(nr, user, msg, dt.getTime() );
-			    		intent.putExtra("detail", d);
+	        	Status status = (Status) adapterView.getAdapter().getItem(position);
+	        	
+	    		Intent intent = new Intent(TimelineActivity.this, DetailedActivity.class);
+	    		long nr = status.getId();
+	    		String user = status.getUser().getName();
+	    		String msg = status.getText();
+	    		Date dt = (Date) status.getCreatedAt();
+	    		
+	    		DetailData d = new DetailData(nr, user, msg, dt.getTime() );
+	    		intent.putExtra("detail", d);
 
-			    		startActivity(intent);
-			        }
-			    });
+	    		startActivity(intent);
+	        }
+	    });
 
-				
+		((Button)findViewById(R.id.Btn_refresh)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				((Button)findViewById(R.id.Btn_refresh)).setEnabled(false);
+				application.getUserTimeline(pref.getString(PreferencesActivity.USERNAMEKEY, ""));
 			}
 		});
 		application.getUserTimeline(pref.getString(PreferencesActivity.USERNAMEKEY, ""));
+		
 	}
 
 	@Override
@@ -77,5 +90,18 @@ public class TimelineActivity extends BaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item){
 		Log.d(ACTIVITY_SERVICE, "onItemSelected");
 		return super.onOptionsItemSelected(item);
+	}
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putString(TIMELINEKEY, status.toString());
+		super.onSaveInstanceState(outState);
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		
+		status = StatusActivity.Status.valueOf(savedInstanceState.getString(TIMELINEKEY));
+		findViewById(R.id.submitStatusButton).setEnabled(status.compareTo(StatusActivity.Status.COMPLETED) == 0);
 	}
 }
