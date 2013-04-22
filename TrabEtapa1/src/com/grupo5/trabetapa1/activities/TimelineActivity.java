@@ -1,5 +1,6 @@
 package com.grupo5.trabetapa1.activities;
 
+import java.util.Date;
 import java.util.List;
 
 import winterwell.jtwitter.Twitter.Status;
@@ -51,10 +52,13 @@ public class TimelineActivity extends BaseActivity {
 						
 			        	
 			    		Intent intent = new Intent(TimelineActivity.this, DetailedActivity.class);
-			    		intent.putExtra("id", status.getId());
-			    		intent.putExtra("autor", status.getUser().toString());
-			    		intent.putExtra("msg", status.getText());
-			    		intent.putExtra("dt", status.getCreatedAt());
+			    		long nr = status.getId();
+			    		String user = status.getUser().getName();
+			    		String msg = status.getText();
+			    		Date dt = (Date) status.getCreatedAt();
+			    		
+			    		DetailData d = new DetailData(nr, user, msg, dt );
+			    		intent.putExtra("detail", d);
 			    		
 
 			    		startActivity(intent);
