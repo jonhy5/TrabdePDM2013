@@ -29,4 +29,6 @@
     <string name="dateColumnTitle">Date</string>
     <string name="txVw2_text">140</string>
     <string name="Detail"></string>
+    <string name="OK"></string>
+    <string name="btnOK">OK</string>
 </resources>
