@@ -47,9 +47,7 @@ public class PreferencesActivity extends Activity {
 				edit.putString(MAXCHARKEY,((EditText) findViewById(R.id.NumChar)).getText().toString());
 				edit.commit();
 				
-				// Redirect to Timeline activity
-				Intent inten = new Intent(PreferencesActivity.this,TimelineActivity.class);
-				startActivity(inten);
+				finish();
 			}			
 		});
 	}

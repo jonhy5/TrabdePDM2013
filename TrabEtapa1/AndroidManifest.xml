@@ -19,13 +19,13 @@
             android:name="com.grupo5.trabetapa1.activities.TimelineActivity"
             android:label="@string/title_activity_timeline" >
             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.grupo5.trabetapa1.activities.StatusActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

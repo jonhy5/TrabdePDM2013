@@ -1,6 +1,5 @@
 package com.grupo5.trabetapa1.activities;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +26,7 @@ public class TimelineActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_timeline);
 		Log.v(ACTIVITY_SERVICE, "Oncreate Timeline");
 
@@ -64,7 +64,6 @@ public class TimelineActivity extends BaseActivity {
 				
 			}
 		});
-		
 		application.getUserTimeline(pref.getString(PreferencesActivity.USERNAMEKEY, ""));
 	}
 
