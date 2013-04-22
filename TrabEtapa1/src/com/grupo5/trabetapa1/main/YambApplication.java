@@ -1,6 +1,9 @@
 package com.grupo5.trabetapa1.main;
 
+import java.util.List;
+
 import winterwell.jtwitter.Twitter;
+import winterwell.jtwitter.Twitter.Status;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -9,12 +12,15 @@ import android.util.Log;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.interfaces.SubmitStatusListener;
+import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
 
 public class YambApplication extends Application implements OnSharedPreferenceChangeListener  {
 	private static final String TAG = YambApplication.class.getSimpleName();
 	private SharedPreferences prefs;
 	private SubmitStatusListener statusListener;
 	private AsyncTask<String, Void, Boolean> statusTask;
+	private UserTimelineListener userTimelineListener;
+	private AsyncTask<String, Void, List<Status>> timelineTask;
 	// Singleton Class twitter;
 	private Twitter twitter;
 	
@@ -67,6 +73,36 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 				statusTask = null;
 			}
 		}.execute(status);
+	}
+	
+	public void setUserTimelineListener(UserTimelineListener listener) {
+		userTimelineListener = listener;
+	}
+	
+	public void getUserTimeline(String user) {
+		if(timelineTask != null) {
+			throw new IllegalStateException();
+		}
+		
+		timelineTask = new AsyncTask<String, Void, List<Status>>() {
+			@Override
+			protected List<winterwell.jtwitter.Twitter.Status> doInBackground(String... user) {
+				try {
+					List<winterwell.jtwitter.Twitter.Status> list = getTwitter().getUserTimeline(user[0]);
+			        return list;
+				} catch (RuntimeException e) {
+			        Log.e(TAG, "Failed to connect to twitter service", e);
+			        return null;
+			    }
+			}
+			
+			@Override 
+			protected void onPostExecute(List<winterwell.jtwitter.Twitter.Status> result) {
+				if(userTimelineListener != null)
+					userTimelineListener.completeReport(result);
+				timelineTask = null;
+			}
+		}.execute(user);
 	}
 
 	@Override

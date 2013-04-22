@@ -23,5 +23,7 @@
   	<string name="ApplyPref_button">Aceitar</string>
   	<string name="status_success_msg">Estado submitido com sucesso.</string>
     <string name="status_error_msg">Erro de ligação ao serviço do twitter.</string>
-  	<string name="timeline_list">Lista</string>
+    <string name="messageColumnTitle">Mensagem</string>
+    <string name="authorColumnTitle">Autor</string>
+    <string name="dateColumnTitle">Data</string>
 </resources>

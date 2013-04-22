@@ -32,7 +32,7 @@ public class PreferencesActivity extends Activity {
 		((EditText) findViewById(R.id.statusEditText)).setText(pref.getString(USERNAMEKEY, "student"));
 		((EditText) findViewById(R.id.Pass)).setText(pref.getString(PASSWORDKEY, "password"));
 		((EditText) findViewById(R.id.baseURI)).setText(pref.getString(BASEURIKEY, "http://yamba.marakana.com/api"));
-		((EditText) findViewById(R.id.MaxNumMsg)).setText(pref.getString(MAXMSGKEY, "25"));
+		((EditText) findViewById(R.id.MaxNumMsg)).setText(pref.getString(MAXMSGKEY, "20"));
 		((EditText) findViewById(R.id.NumChar)).setText(pref.getString(MAXCHARKEY, "140"));
 		
 		((Button)findViewById(R.id.but1_PrefApply)).setOnClickListener(new View.OnClickListener(){
