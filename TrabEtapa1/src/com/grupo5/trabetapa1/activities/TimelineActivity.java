@@ -3,12 +3,17 @@ package com.grupo5.trabetapa1.activities;
 import java.util.List;
 
 import winterwell.jtwitter.Twitter.Status;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
@@ -33,6 +38,30 @@ public class TimelineActivity extends BaseActivity {
 			public void completeReport(List<Status> list) {
 				GridView gridView = (GridView) findViewById(R.id.timelineGridView);
 				gridView.setAdapter(new TimelineAdapter(TimelineActivity.this, list));
+				
+				gridView.setOnItemClickListener(new OnItemClickListener() {
+
+			        @Override
+			        public void onItemClick(AdapterView<?> arg0, View arg1,int position, long id) {
+
+			        	Log.v(ACTIVITY_SERVICE, "onItemClick");
+
+			        	Status status = (Status) arg0.getAdapter().getItem(position);
+			        	
+						
+			        	
+			    		Intent intent = new Intent(TimelineActivity.this, DetailedActivity.class);
+			    		intent.putExtra("id", status.getId());
+			    		intent.putExtra("autor", status.getUser().toString());
+			    		intent.putExtra("msg", status.getText());
+			    		intent.putExtra("dt", status.getCreatedAt());
+			    		
+
+			    		startActivity(intent);
+			        }
+			    });
+
+				
 			}
 		});
 		
