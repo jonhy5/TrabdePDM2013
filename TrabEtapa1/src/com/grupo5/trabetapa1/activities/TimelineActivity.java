@@ -1,20 +1,20 @@
 package com.grupo5.trabetapa1.activities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import winterwell.jtwitter.Twitter.Status;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 
 import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
@@ -37,19 +37,16 @@ public class TimelineActivity extends BaseActivity {
 		application.setUserTimelineListener(new UserTimelineListener() {
 			@Override
 			public void completeReport(List<Status> list) {
-				GridView gridView = (GridView) findViewById(R.id.timelineGridView);
-				gridView.setAdapter(new TimelineAdapter(TimelineActivity.this, list));
+				GridView gridView = (GridView) findViewById(R.id.timelineGridView);				
+				gridView.setAdapter(new TimelineAdapter(TimelineActivity.this, list.subList(0, maxListItems)));
 				
 				gridView.setOnItemClickListener(new OnItemClickListener() {
-
 			        @Override
-			        public void onItemClick(AdapterView<?> arg0, View arg1,int position, long id) {
+			        public void onItemClick(AdapterView<?> adapterView, View arg1,int position, long id) {
 
 			        	Log.v(ACTIVITY_SERVICE, "onItemClick");
 
-			        	Status status = (Status) arg0.getAdapter().getItem(position);
-			        	
-						
+			        	Status status = (Status) adapterView.getAdapter().getItem(position);
 			        	
 			    		Intent intent = new Intent(TimelineActivity.this, DetailedActivity.class);
 			    		long nr = status.getId();
@@ -59,7 +56,6 @@ public class TimelineActivity extends BaseActivity {
 			    		
 			    		DetailData d = new DetailData(nr, user, msg, dt );
 			    		intent.putExtra("detail", d);
-			    		
 
 			    		startActivity(intent);
 			        }

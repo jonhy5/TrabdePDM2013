@@ -114,5 +114,4 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			twitter = null;
 		}
 	}
-	
 }
