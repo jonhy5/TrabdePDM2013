@@ -43,14 +43,14 @@ public class TimelineActivity extends BaseActivity {
 		
 		String maxItens = shp.getString("MaxMsg", null);
 		
-		
+		/*
 		List<Status> list = tw.getUserTimeline();
 		
 		
 		for (Status status : list) {
            Log.v("Timeline", status.getUser().getName() + ":" + status.getText() );
 		}
-		
+		*/
 		
 	}
 

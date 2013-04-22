@@ -2,13 +2,17 @@ package com.grupo5.trabetapa1.main;
 
 import winterwell.jtwitter.Twitter;
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.interfaces.SubmitStatusListener;
 
-public class YambApplication extends Application {
+public class YambApplication extends Application implements OnSharedPreferenceChangeListener  {
 	private static final String TAG = YambApplication.class.getSimpleName();
+	private SharedPreferences prefs;
 	private SubmitStatusListener statusListener;
 	private AsyncTask<String, Void, Boolean> statusTask;
 	// Singleton Class twitter;
@@ -19,21 +23,18 @@ public class YambApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		Log.i(TAG, "onCreate");
+		
+		prefs = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
+		prefs.registerOnSharedPreferenceChangeListener(this);
 	}
 	
 	public synchronized Twitter getTwitter() {
 		if(twitter == null) {
-			/*
-			String username = this.prefs.getString("username", null);
-			String password = this.prefs.getString("password", null);
-			String url = this.prefs.getString("url", "http://yamba.marakana.com/api");
-			if(!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(url)) {
-				this.twitter = new Twitter(username, password);
-				this.twitter.setAPIRootUrl(url);
-			}
-			*/
-			twitter = new Twitter("student", "password");
-			twitter.setAPIRootUrl("http://yamba.marakana.com/api");
+			String username = prefs.getString(PreferencesActivity.USERNAMEKEY, "student");
+			String password = prefs.getString(PreferencesActivity.PASSWORDKEY, "password");
+			String url = prefs.getString(PreferencesActivity.BASEURIKEY, "http://yamba.marakana.com/api");
+			twitter = new Twitter(username, password);
+			twitter.setAPIRootUrl(url);
 		}
 		return this.twitter;
 	}
@@ -66,5 +67,15 @@ public class YambApplication extends Application {
 				statusTask = null;
 			}
 		}.execute(status);
+	}
+
+	@Override
+	public synchronized void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		// If preferences changes set twitter to null to create a new instance with the new values
+		if(	key.equals(PreferencesActivity.USERNAMEKEY) ||
+			key.equals(PreferencesActivity.PASSWORDKEY) ||
+			key.equals(PreferencesActivity.BASEURIKEY)) {
+			twitter = null;
+		}
 	}
 }

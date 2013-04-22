@@ -1,5 +1,6 @@
 package com.grupo5.trabetapa1.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -24,7 +25,7 @@ public class StatusActivity extends BaseActivity {
 	private static final String TAG = YambApplication.class.getSimpleName();
 
 	private YambApplication application;
-	private int maxChars = 140; // TODO: Get Value from preferences
+	private int maxChars;
 	private Status status;
 	
 	@Override
@@ -36,6 +37,9 @@ public class StatusActivity extends BaseActivity {
 		setContentView(R.layout.activity_status);
 		
 		status = Status.COMPLETED;
+		
+		SharedPreferences pref = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
+		maxChars = Integer.parseInt(pref.getString(PreferencesActivity.MAXCHARKEY, "140"));
 		
 		TextView textCounter = (TextView) findViewById(R.id.statusTextCounterTextView);
 		EditText statusText = (EditText) findViewById(R.id.statusEditText);
