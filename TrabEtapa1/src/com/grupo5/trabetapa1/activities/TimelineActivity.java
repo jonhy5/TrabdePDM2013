@@ -20,6 +20,7 @@ import android.widget.Button;
 import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
 import com.grupo5.trabetapa1.main.YambApplication;
+import com.grupo5.trabetapa1.services.TimelinePull;
 
 public class TimelineActivity extends BaseActivity {
 	private int maxListItems;
@@ -72,8 +73,12 @@ public class TimelineActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View v) {
-				((Button)findViewById(R.id.Btn_refresh)).setEnabled(false);
-				application.getUserTimeline(pref.getString(PreferencesActivity.USERNAMEKEY, ""));
+				/*((Button)findViewById(R.id.Btn_refresh)).setEnabled(false);
+				application.getUserTimeline(pref.getString(PreferencesActivity.USERNAMEKEY, ""));*/
+				Intent intent = new Intent(TimelineActivity.this, TimelinePull.class);
+				intent.putExtra(PreferencesActivity.USERNAMEKEY, pref.getString(PreferencesActivity.USERNAMEKEY, "student"));
+				startService(intent);
+						
 			}
 		});
 		application.getUserTimeline(pref.getString(PreferencesActivity.USERNAMEKEY, ""));

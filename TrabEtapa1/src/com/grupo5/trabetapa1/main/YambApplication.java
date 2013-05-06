@@ -1,21 +1,25 @@
 package com.grupo5.trabetapa1.main;
 
+import java.sql.Time;
+import java.util.Calendar;
 import java.util.List;
 
 import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.Twitter.Status;
+
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Button;
 
-import com.grupo5.trabetapa1.R;
+import android.util.Log;
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.interfaces.SubmitStatusListener;
 import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
+import com.grupo5.trabetapa1.services.TimelinePull;
 
 public class YambApplication extends Application implements OnSharedPreferenceChangeListener  {
 	private static final String TAG = YambApplication.class.getSimpleName();
@@ -24,10 +28,12 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 	private AsyncTask<String, Void, Boolean> statusTask;
 	private UserTimelineListener userTimelineListener;
 	private AsyncTask<String, Void, List<Status>> timelineTask;
+	private List<Status> statusList;
 	// Singleton Class twitter;
 	private Twitter twitter;
 	
 	public static final String preferencesFileName = "ClientPrefs";
+	private PendingIntent intentPull;
 	
 	public void onCreate() {
 		super.onCreate();
@@ -41,6 +47,10 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			newActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(newActivity);
 		}
+		AlarmManager mng = (AlarmManager) getSystemService(ALARM_SERVICE);
+		Intent timepull = new Intent(this,TimelinePull.class);
+		intentPull = PendingIntent.getService(this, 1, timepull, PendingIntent.FLAG_CANCEL_CURRENT);
+		mng.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(),AlarmManager.INTERVAL_FIFTEEN_MINUTES,intentPull);
 	}
 	
 	public synchronized Twitter getTwitter() {
@@ -88,6 +98,10 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		userTimelineListener = listener;
 	}
 	
+	public void updateStatusList(String user){
+		statusList = getTwitter().getUserTimeline(user);
+	}
+	
 	public void getUserTimeline(String user) {
 		if(timelineTask != null) {
 			throw new IllegalStateException();
@@ -98,7 +112,8 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			protected List<winterwell.jtwitter.Twitter.Status> doInBackground(String... user) {
 				
 				try {
-					List<winterwell.jtwitter.Twitter.Status> list = getTwitter().getUserTimeline(user[0]);
+					if(statusList == null){updateStatusList(user[0]);}
+					List<winterwell.jtwitter.Twitter.Status> list = statusList;//getTwitter().getUserTimeline(user[0]);
 			        return list;
 				} catch (RuntimeException e) {
 			        Log.e(TAG, "Failed to connect to twitter service", e);
