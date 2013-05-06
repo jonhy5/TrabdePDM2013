@@ -1,5 +1,6 @@
 package com.grupo5.trabetapa1.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.interfaces.SubmitStatusListener;
 import com.grupo5.trabetapa1.main.YambApplication;
+import com.grupo5.trabetapa1.services.StatusUpload;
 
 public class StatusActivity extends BaseActivity {
 	public enum Status {COMPLETED, SENDING};
@@ -76,9 +78,17 @@ public class StatusActivity extends BaseActivity {
 			public void onClick(View v) {
 				Log.i(TAG, "Submit button clicked");
 				
-				status = Status.SENDING;
-				((Button) findViewById(R.id.submitStatusButton)).setEnabled(false);
-				application.submitStatus(((EditText) findViewById(R.id.statusEditText)).getText().toString());
+			//	status = Status.SENDING;
+			//	((Button) findViewById(R.id.submitStatusButton)).setEnabled(false);
+			//	application.submitStatus(((EditText) findViewById(R.id.statusEditText)).getText().toString());
+				
+				
+				Intent intent = new Intent(StatusActivity.this, StatusUpload.class);
+				
+				intent.putExtra("StatusMsg", ((EditText) findViewById(R.id.statusEditText)).getText().toString());
+
+				startService(intent);
+				
 			}
 		});
 		

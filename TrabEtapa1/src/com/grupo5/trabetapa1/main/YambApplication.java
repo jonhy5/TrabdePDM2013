@@ -72,8 +72,9 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		if(statusTask != null) {
 			throw new IllegalStateException();
 		}
+		Log.v("submit sattus", "submit sattus");
 		
-		statusTask = new AsyncTask<String, Void, Boolean>() {
+		/*statusTask = new AsyncTask<String, Void, Boolean>() {
 			@Override
 			protected Boolean doInBackground(String... status) {
 				try {
@@ -91,7 +92,8 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 					statusListener.completeReport(result);
 				statusTask = null;
 			}
-		}.execute(status);
+		}.execute(status);*/
+		
 	}
 	
 	public void setUserTimelineListener(UserTimelineListener listener) {
