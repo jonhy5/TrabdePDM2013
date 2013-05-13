@@ -27,6 +27,7 @@ public class TimelineActivity extends BaseActivity {
 	private YambApplication application;
 	private static final String TIMELINEKEY = "TimeLineActivity_status";
 	private StatusActivity.Status status;
+	public static String UPDATEVIEW = "UpdateView";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,6 +78,7 @@ public class TimelineActivity extends BaseActivity {
 				application.getUserTimeline(pref.getString(PreferencesActivity.USERNAMEKEY, ""));*/
 				Intent intent = new Intent(TimelineActivity.this, TimelinePull.class);
 				intent.putExtra(PreferencesActivity.USERNAMEKEY, pref.getString(PreferencesActivity.USERNAMEKEY, "student"));
+				intent.putExtra(UPDATEVIEW, true);
 				startService(intent);
 						
 			}

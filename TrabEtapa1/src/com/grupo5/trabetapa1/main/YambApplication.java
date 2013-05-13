@@ -38,7 +38,6 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 	public void onCreate() {
 		super.onCreate();
 		Log.i(TAG, "onCreate");
-		
 		prefs = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
 		prefs.registerOnSharedPreferenceChangeListener(this);
 		
@@ -100,8 +99,10 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		userTimelineListener = listener;
 	}
 	
-	public void updateStatusList(String user){
+	public void updateStatusList(String user, boolean updateview){
 		statusList = getTwitter().getUserTimeline(user);
+		if(updateview)
+			getUserTimeline(prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
 	}
 	
 	public void getUserTimeline(String user) {
@@ -114,7 +115,7 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			protected List<winterwell.jtwitter.Twitter.Status> doInBackground(String... user) {
 				
 				try {
-					if(statusList == null){updateStatusList(user[0]);}
+					if(statusList == null){updateStatusList(user[0], false);}
 					List<winterwell.jtwitter.Twitter.Status> list = statusList;//getTwitter().getUserTimeline(user[0]);
 			        return list;
 				} catch (RuntimeException e) {

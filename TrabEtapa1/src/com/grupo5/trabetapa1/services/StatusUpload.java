@@ -1,6 +1,6 @@
 package com.grupo5.trabetapa1.services;
 
-import com.grupo5.trabetapa1.activities.PreferencesActivity;
+
 import com.grupo5.trabetapa1.main.YambApplication;
 
 import android.app.IntentService;

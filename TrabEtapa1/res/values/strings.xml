@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Yamba 5</string>
     <string name="hello_world">Hello World!</string>
     <string name="title_activity_status">Status</string>
@@ -12,7 +13,7 @@
     <string name="actBar_Menu_timeline">Timeline</string>
     <string name="actBar_Menu_Status">Status</string>
     <string name="actBar_Menu_Preferences">Preferences</string>
-	<string name="actBar_Menu_timeline_cond">TmLine</string>
+    <string name="actBar_Menu_timeline_cond">TmLine</string>
     <string name="actBar_Menu_Status_cond">St</string>
     <string name="actBar_Menu_Preferences_cond">Pref</string>
     <string name="UserName_text">UserName</string>
@@ -35,6 +36,6 @@
     <string name="btnOK">OK</string>
     <string name="timeline_Seconds">Seconds</string>
     <string name="Refresh_Button">Refresh</string>
-    
-    
+    <string name="title_activity_user_info">UserInfoActivity</string>
+
 </resources>

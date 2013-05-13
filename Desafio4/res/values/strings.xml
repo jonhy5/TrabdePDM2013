@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Desafio4</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="label_bind_button">Bind</string>
+    <string name="label_unbind_button">Unbind</string>
+    <string name="label_call_button">Call</string>
+
+</resources>

@@ -3,6 +3,7 @@ package com.grupo5.trabetapa1.services;
 
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
+import com.grupo5.trabetapa1.activities.TimelineActivity;
 import com.grupo5.trabetapa1.main.YambApplication;
 
 import android.app.IntentService;
@@ -28,6 +29,7 @@ public class TimelinePull extends IntentService{
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		String name = intent.getStringExtra(PreferencesActivity.USERNAMEKEY);
-		aplication.updateStatusList(name);
+		boolean updateView = intent.getBooleanExtra(TimelineActivity.UPDATEVIEW, false);
+		aplication.updateStatusList(name, updateView);
 	}
 }
