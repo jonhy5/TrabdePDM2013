@@ -40,7 +40,10 @@ public class BaseActivity extends Activity {
 				inten = new Intent(this,PreferencesActivity.class);
 				startActivity(inten);
 				return true;
-			
+			case R.id.InfoUser:
+				inten = new Intent(this,UserInfoActivity.class);
+				startActivity(inten);
+				
 			default:
 				return super.onOptionsItemSelected(item);
 		}

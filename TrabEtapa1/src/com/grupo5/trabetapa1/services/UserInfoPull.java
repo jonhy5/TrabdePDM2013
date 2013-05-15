@@ -1,37 +1,93 @@
 package com.grupo5.trabetapa1.services;
 
+import java.util.List;
+
+import winterwell.jtwitter.Twitter;
+import winterwell.jtwitter.Twitter.User;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Bundle;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
-import android.os.Messenger;
+import android.os.RemoteException;
+import android.widget.Toast;
+
+import com.grupo5.trabetapa1.activities.DetailData;
+import com.grupo5.trabetapa1.activities.PreferencesActivity;
+import com.grupo5.trabetapa1.main.YambApplication;
 
 public class UserInfoPull extends Service {
 
+	private Handler _uiHandler;
+	private  MyParcelable info;
+	
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
 	}
 
-	static class IncomingHandler extends Handler{
-
-		@Override
-		public void handleMessage(Message msg) {
-			Bundle payload = msg.getData();
-			
-		}
+	
+	//gerar um ficheiro *.aidl
+	//para gerar a interface remote
+	//fazer a activy que vai gerar o server par aobter a obter do user do teewts
 		
+
+	@Override
+	public boolean onUnbind(Intent intent) 
+	{
+		Toast.makeText(this, "onUnbind()", Toast.LENGTH_LONG).show();
+		return super.onUnbind(intent);
+	}
+
+	@Override
+	public void onRebind(Intent intent) 
+	{
+		Toast.makeText(this, "onRebind()", Toast.LENGTH_LONG).show();
+		super.onRebind(intent);
 	}
 	
-	Messenger msg = new Messenger(new IncomingHandler());
-	
-	
+
 	@Override
-	public IBinder onBind(Intent intent) {
-		return msg.getBinder();
+	public IBinder onBind(Intent intent) 
+	{
+		return new IRemoteBoundService.Stub() {
+			
+			
+			@Override
+			public MyParcelable getStatus() throws RemoteException {
+				
+	   			_uiHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						
+						YambApplication app = (YambApplication)getApplication();
+						SharedPreferences pref = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
+						String name = pref.getString(PreferencesActivity.USERNAMEKEY, "student");
+						
+						
+						User user = app.getTwitter().getUser(name);
+						
+						
+						final int statusCount;
+						final int friendsCount;
+						final int followersCount;
+						final String image;
+						
+						statusCount = user.getStatusesCount();
+						friendsCount = user.getFriendsCount();
+						followersCount = user.getFollowersCount();
+						image = user.getProfileBackgroundImageUrl().toString();
+						
+						
+						info = new MyParcelable(name, statusCount,friendsCount, followersCount, image);
+
+					}
+				});
+				
+				return info;
+			}
+		};
 	}
 
 }
