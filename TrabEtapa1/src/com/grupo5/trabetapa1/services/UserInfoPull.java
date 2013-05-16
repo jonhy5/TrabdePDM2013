@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.grupo5.trabetapa1.activities.DetailData;
@@ -25,6 +26,7 @@ public class UserInfoPull extends Service {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+		
 	}
 
 	
@@ -51,6 +53,7 @@ public class UserInfoPull extends Service {
 	@Override
 	public IBinder onBind(Intent intent) 
 	{
+		Log.v("","OnBind");
 		return new IRemoteBoundService.Stub() {
 			
 			

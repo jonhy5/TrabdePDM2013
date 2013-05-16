@@ -60,5 +60,25 @@ public class MyParcelable implements Parcelable{
 		
 	}
 	
+	public String getName()
+	{
+		return screenName;
+	}
+	
+	public int getStatusCount()
+	{
+		return statusCount;
+	}
+	
+	public int getFriendsCount()
+	{
+		return friendsCount;
+	}
+	
+	public int getFollowersCount()
+	{
+		return followersCount;
+	}
+	
 	
 }

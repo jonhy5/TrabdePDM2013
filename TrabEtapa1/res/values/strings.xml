@@ -37,5 +37,6 @@
     <string name="timeline_Seconds">Seconds</string>
     <string name="Refresh_Button">Refresh</string>
     <string name="title_activity_user_info">UserInfoActivity</string>
+    <string name="UserInfo">UsrInfo</string>
 
 </resources>
