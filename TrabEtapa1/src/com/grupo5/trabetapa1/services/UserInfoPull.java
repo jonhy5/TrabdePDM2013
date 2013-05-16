@@ -1,8 +1,6 @@
 package com.grupo5.trabetapa1.services;
 
-import java.util.List;
 
-import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.Twitter.User;
 import android.app.Service;
 import android.content.Intent;
@@ -13,7 +11,6 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.grupo5.trabetapa1.activities.DetailData;
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.main.YambApplication;
 
@@ -29,11 +26,6 @@ public class UserInfoPull extends Service {
 		
 	}
 
-	
-	//gerar um ficheiro *.aidl
-	//para gerar a interface remote
-	//fazer a activy que vai gerar o server par aobter a obter do user do teewts
-		
 
 	@Override
 	public boolean onUnbind(Intent intent) 

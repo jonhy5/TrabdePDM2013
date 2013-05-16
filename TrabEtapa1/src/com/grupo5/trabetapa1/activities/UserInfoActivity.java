@@ -1,8 +1,6 @@
 package com.grupo5.trabetapa1.activities;
 
 import com.grupo5.trabetapa1.R;
-import com.grupo5.trabetapa1.R.layout;
-import com.grupo5.trabetapa1.R.menu;
 import com.grupo5.trabetapa1.services.IRemoteBoundService;
 import com.grupo5.trabetapa1.services.MyParcelable;
 
@@ -10,6 +8,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.app.Activity;
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -59,6 +58,8 @@ public class UserInfoActivity extends Activity {
 				_remoteBinder = null;
 			}
 		};
+		
+		bindService(_bindIntent, connection, Service.BIND_AUTO_CREATE);
 
 	}
 
