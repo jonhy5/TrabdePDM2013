@@ -47,15 +47,14 @@ public class UserInfoPull extends Service {
 	{
 		Log.v("","OnBind");
 		return new IRemoteBoundService.Stub() {
-			
-			
 			@Override
 			public MyParcelable getStatus() throws RemoteException {
 				
 	   			_uiHandler.post(new Runnable() {
-					@Override
+	   				
+	   				@Override
 					public void run() {
-						
+						Log.v("InfoPull", "Cheguei ao InfoPull");
 						YambApplication app = (YambApplication)getApplication();
 						SharedPreferences pref = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
 						String name = pref.getString(PreferencesActivity.USERNAMEKEY, "student");
@@ -79,7 +78,7 @@ public class UserInfoPull extends Service {
 
 					}
 				});
-				
+	   			Log.v("Leave","OnBind");
 				return info;
 			}
 		};

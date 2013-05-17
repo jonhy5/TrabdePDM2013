@@ -3,7 +3,9 @@ package com.grupo5.trabetapa1.activities;
 import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.services.IRemoteBoundService;
 import com.grupo5.trabetapa1.services.MyParcelable;
+import com.grupo5.trabetapa1.services.UserInfoPull;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -39,7 +41,7 @@ public class UserInfoActivity extends Activity {
 		followersCount = (TextView) findViewById(R.id.edtFollowersCountUserInfo);
 		
 		
-		_bindIntent = new Intent(UserInfoActivity.this,IRemoteBoundService.class);
+		_bindIntent = new Intent(UserInfoActivity.this,UserInfoPull.class);
 		
 		final ServiceConnection connection = new ServiceConnection() {
 			@Override
@@ -47,8 +49,6 @@ public class UserInfoActivity extends Activity {
 			{
 				Log.v("","OnServiceConnected");
 				_remoteBinder = IRemoteBoundService.Stub.asInterface(service);
-				
-				LoadData();
 			}
 
 			@Override
@@ -58,9 +58,35 @@ public class UserInfoActivity extends Activity {
 				_remoteBinder = null;
 			}
 		};
-		
 		bindService(_bindIntent, connection, Service.BIND_AUTO_CREATE);
+		new AsyncTask<Void, Void, Void>(){
+			MyParcelable info;
+			@Override
+			protected Void doInBackground(Void... params) {
+				try {
+					info = _remoteBinder.getStatus();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			}
 
+			@Override
+			protected void onPostExecute(Void result) {
+				super.onPostExecute(result);
+				if(info!= null){
+					screenName.setText(info.getName());
+					statusCount.setText(""+info.getStatusCount());
+					friendsCount.setText(""+info.getFriendsCount());
+					followersCount.setText(""+info.getFollowersCount());
+				}
+				
+			}
+			
+		}.execute((Void)null);
+		
+		//LoadData();
 	}
 
 	@Override

@@ -18,17 +18,15 @@
         android:theme="@style/AppTheme" >
         <service
             android:name="com.grupo5.trabetapa1.services.StatusUpload"
-            android:process="com.grupo5.trabetapa1.services" >
+        >
         </service>
         <service
             android:name="com.grupo5.trabetapa1.services.TimelinePull"
-            android:process="com.grupo5.trabetapa1.services" >
+         >
         </service>
         <service 
             android:name="com.grupo5.trabetapa1.services.UserInfoPull"
-            android:process=".com.grupo5.trabetapa1.services.UserInfoPull"
-            >
-            
+            android:process="com.grupo5.trabetapa1.services.Other">
         </service>
 
         <activity
