@@ -2,6 +2,7 @@ package com.grupo5.trabetapa1.services;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 public class MyParcelable implements Parcelable{
 
 	private String screenName;

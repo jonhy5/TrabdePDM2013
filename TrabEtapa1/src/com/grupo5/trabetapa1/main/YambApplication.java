@@ -1,12 +1,9 @@
 package com.grupo5.trabetapa1.main;
 
-import java.sql.Time;
-import java.util.Calendar;
 import java.util.List;
 
 import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.Twitter.Status;
-
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
@@ -14,8 +11,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.AsyncTask;
-
 import android.util.Log;
+
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.interfaces.SubmitStatusListener;
 import com.grupo5.trabetapa1.interfaces.UserTimelineListener;

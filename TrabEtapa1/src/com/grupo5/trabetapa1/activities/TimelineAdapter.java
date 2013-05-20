@@ -1,20 +1,17 @@
 package com.grupo5.trabetapa1.activities;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.grupo5.trabetapa1.R;
-
 import winterwell.jtwitter.Twitter.Status;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.grupo5.trabetapa1.R;
 
 public class TimelineAdapter extends BaseAdapter {
 	private static final int NUMOFCHAR = 10;
