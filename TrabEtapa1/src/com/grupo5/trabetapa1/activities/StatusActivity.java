@@ -14,10 +14,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.grupo5.trabetapa1.R;
-import com.grupo5.trabetapa1.interfaces.SubmitStatusListener;
 import com.grupo5.trabetapa1.main.YambApplication;
 import com.grupo5.trabetapa1.services.StatusUpload;
 
@@ -25,8 +23,6 @@ public class StatusActivity extends BaseActivity {
 	public enum Status {COMPLETED, SENDING};
 	private static final String STATUSKEY = "StatusActivity_status";
 	private static final String TAG = YambApplication.class.getSimpleName();
-
-	private YambApplication application;
 	private int maxChars;
 	private Status status;
 	
@@ -46,9 +42,6 @@ public class StatusActivity extends BaseActivity {
 		TextView textCounter = (TextView) findViewById(R.id.statusTextCounterTextView);
 		EditText statusText = (EditText) findViewById(R.id.statusEditText);
 		Button submitButton = (Button) findViewById(R.id.submitStatusButton);
-		
-		Log.i(TAG, getApplication().toString());
-		application = (YambApplication) getApplication();
 		
 		textCounter.setText(Integer.toString(maxChars)); 
 		
@@ -76,35 +69,10 @@ public class StatusActivity extends BaseActivity {
 		submitButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Log.i(TAG, "Submit button clicked");
-				
-			//	status = Status.SENDING;
-			//	((Button) findViewById(R.id.submitStatusButton)).setEnabled(false);
-			//	application.submitStatus(((EditText) findViewById(R.id.statusEditText)).getText().toString());
-				
-				
+				Log.i(TAG, "Submit button clicked");				
 				Intent intent = new Intent(StatusActivity.this, StatusUpload.class);
-				
 				intent.putExtra("StatusMsg", ((EditText) findViewById(R.id.statusEditText)).getText().toString());
-
 				startService(intent);
-				
-			}
-		});
-		
-		application.setSubmitStatusListener(new SubmitStatusListener() {
-			@Override
-			public void completeReport(boolean success) {
-				String msg;
-				
-				if(success) {
-					msg = getResources().getString(R.string.status_success_msg);
-				} else {
-					msg = getResources().getString(R.string.status_error_msg);
-				}
-				Toast.makeText(StatusActivity.this, msg, Toast.LENGTH_SHORT).show();
-				status = Status.COMPLETED;
-				((Button) findViewById(R.id.submitStatusButton)).setEnabled(true);
 			}
 		});
 	}

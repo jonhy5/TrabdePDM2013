@@ -41,7 +41,7 @@ public class UserInfoActivity extends Activity {
 		followersCount = (TextView) findViewById(R.id.edtFollowersCountUserInfo);
 		
 		
-		_bindIntent = new Intent(UserInfoActivity.this,UserInfoPull.class);
+		_bindIntent = new Intent(UserInfoActivity.this, UserInfoPull.class);
 		
 		final ServiceConnection connection = new ServiceConnection() {
 			@Override
@@ -59,11 +59,13 @@ public class UserInfoActivity extends Activity {
 			}
 		};
 		bindService(_bindIntent, connection, Service.BIND_AUTO_CREATE);
-		new AsyncTask<Void, Void, Void>(){
+		
+		/*new AsyncTask<Void, Void, Void>(){
 			MyParcelable info;
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
+					
 					info = _remoteBinder.getStatus();
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
@@ -84,9 +86,18 @@ public class UserInfoActivity extends Activity {
 				
 			}
 			
-		}.execute((Void)null);
-		
-		//LoadData();
+		}.execute((Void)null);*/
+		try {
+			MyParcelable info = _remoteBinder.getStatus();
+			
+			screenName.setText(info.getName());
+			statusCount.setText(""+info.getStatusCount());
+			friendsCount.setText(""+info.getFriendsCount());
+			followersCount.setText(""+info.getFollowersCount());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -95,24 +106,4 @@ public class UserInfoActivity extends Activity {
 		getMenuInflater().inflate(R.menu.user_info, menu);
 		return true;
 	}
-	
-	public void LoadData()
-	{
-		MyParcelable info;
-		try {
-			info = _remoteBinder.getStatus();
-			screenName.setText(info.getName());
-			statusCount.setText(""+info.getStatusCount());
-			friendsCount.setText(""+info.getFriendsCount());
-			followersCount.setText(""+info.getFollowersCount());
-			
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}	
-	
-
 }

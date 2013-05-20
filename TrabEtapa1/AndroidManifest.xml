@@ -26,7 +26,7 @@
         </service>
         <service 
             android:name="com.grupo5.trabetapa1.services.UserInfoPull"
-            android:process="com.grupo5.trabetapa1.services.Other">
+            android:process=":UserInfoPullProcess">
         </service>
 
         <activity

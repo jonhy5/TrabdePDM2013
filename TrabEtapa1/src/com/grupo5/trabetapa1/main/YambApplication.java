@@ -14,15 +14,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
-import com.grupo5.trabetapa1.interfaces.SubmitStatusListener;
 import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
 import com.grupo5.trabetapa1.services.TimelinePull;
 
 public class YambApplication extends Application implements OnSharedPreferenceChangeListener  {
 	private static final String TAG = YambApplication.class.getSimpleName();
 	private SharedPreferences prefs;
-	private SubmitStatusListener statusListener;
-	private AsyncTask<String, Void, Boolean> statusTask;
 	private UserTimelineListener userTimelineListener;
 	private AsyncTask<String, Void, List<Status>> timelineTask;
 	private List<Status> statusList;
@@ -59,47 +56,16 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		}
 		return this.twitter;
 	}
-	
-	public void setSubmitStatusListener(SubmitStatusListener listener) {
-		statusListener = listener;
-	}
-	
-	public void submitStatus(String status) {
-		if(statusTask != null) {
-			throw new IllegalStateException();
-		}
-		Log.v("submit sattus", "submit sattus");
-		
-		/*statusTask = new AsyncTask<String, Void, Boolean>() {
-			@Override
-			protected Boolean doInBackground(String... status) {
-				try {
-					getTwitter().updateStatus(status[0]);
-			        return true;
-				} catch (RuntimeException e) {
-			        Log.e(TAG, "Failed to connect to twitter service", e);
-			        return false;
-			    }
-			}
 			
-			@Override 
-			protected void onPostExecute(Boolean result) {
-				if(statusListener != null)
-					statusListener.completeReport(result);
-				statusTask = null;
-			}
-		}.execute(status);*/
-		
-	}
-	
 	public void setUserTimelineListener(UserTimelineListener listener) {
 		userTimelineListener = listener;
 	}
 	
 	public void updateStatusList(String user, boolean updateview){
 		statusList = getTwitter().getUserTimeline(user);
-		if(updateview)
+		if(updateview) {
 			getUserTimeline(prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
+		}
 	}
 	
 	public void getUserTimeline(String user) {
@@ -112,8 +78,10 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			protected List<winterwell.jtwitter.Twitter.Status> doInBackground(String... user) {
 				
 				try {
-					if(statusList == null){updateStatusList(user[0], false);}
-					List<winterwell.jtwitter.Twitter.Status> list = statusList;//getTwitter().getUserTimeline(user[0]);
+					if(statusList == null) {
+						updateStatusList(user[0], false);
+					}
+					List<winterwell.jtwitter.Twitter.Status> list = statusList;
 			        return list;
 				} catch (RuntimeException e) {
 			        Log.e(TAG, "Failed to connect to twitter service", e);

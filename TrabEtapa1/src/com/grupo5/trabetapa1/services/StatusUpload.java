@@ -1,6 +1,5 @@
 package com.grupo5.trabetapa1.services;
 
-
 import com.grupo5.trabetapa1.main.YambApplication;
 
 import android.app.IntentService;
@@ -8,12 +7,10 @@ import android.content.Intent;
 import android.util.Log;
 
 public class StatusUpload extends IntentService {
-
 	private YambApplication aplication;
 	
 	public StatusUpload() {
 		super("StatusUpload");
-		
 	}
 	
 	@Override
@@ -37,5 +34,4 @@ public class StatusUpload extends IntentService {
 		String name = intent.getStringExtra("StatusMsg");
 		aplication.getTwitter().updateStatus(name);
 	}
-
 }

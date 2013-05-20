@@ -21,11 +21,9 @@ public class UserInfoPull extends Service {
 	
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 		super.onCreate();
-		
+		_uiHandler = new Handler();
 	}
-
 
 	@Override
 	public boolean onUnbind(Intent intent) 
@@ -41,7 +39,6 @@ public class UserInfoPull extends Service {
 		super.onRebind(intent);
 	}
 	
-
 	@Override
 	public IBinder onBind(Intent intent) 
 	{
@@ -50,18 +47,16 @@ public class UserInfoPull extends Service {
 			@Override
 			public MyParcelable getStatus() throws RemoteException {
 				
-	   			_uiHandler.post(new Runnable() {
+	   			/*_uiHandler.post(new Runnable() {
 	   				
 	   				@Override
-					public void run() {
+					public void run() {*/
 						Log.v("InfoPull", "Cheguei ao InfoPull");
 						YambApplication app = (YambApplication)getApplication();
 						SharedPreferences pref = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
 						String name = pref.getString(PreferencesActivity.USERNAMEKEY, "student");
 						
-						
 						User user = app.getTwitter().getUser(name);
-						
 						
 						final int statusCount;
 						final int friendsCount;
@@ -73,11 +68,9 @@ public class UserInfoPull extends Service {
 						followersCount = user.getFollowersCount();
 						image = user.getProfileBackgroundImageUrl().toString();
 						
-						
 						info = new MyParcelable(name, statusCount,friendsCount, followersCount, image);
-
-					}
-				});
+					/*}
+				});*/
 	   			Log.v("Leave","OnBind");
 				return info;
 			}

@@ -83,7 +83,7 @@ public class TimelineActivity extends BaseActivity {
 						
 			}
 		});
-		application.getUserTimeline(pref.getString(PreferencesActivity.USERNAMEKEY, ""));
+		//application.getUserTimeline(pref.getString(PreferencesActivity.USERNAMEKEY, ""));
 		
 	}
 
