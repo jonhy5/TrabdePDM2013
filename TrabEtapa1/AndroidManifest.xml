@@ -30,11 +30,9 @@
         </service>
 
         <activity
-            android:name="com.grupo5.trabetapa1.activities.TimelineActivity"
-            android:label="@string/title_activity_timeline" >
+            android:name="com.grupo5.trabetapa1.activities.TimelineActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -64,5 +62,4 @@
             android:label="@string/title_activity_user_info" >
         </activity>
     </application>
-
 </manifest>

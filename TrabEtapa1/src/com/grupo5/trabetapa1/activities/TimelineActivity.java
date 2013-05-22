@@ -26,15 +26,16 @@ public class TimelineActivity extends BaseActivity {
 	private int maxListItems;
 	private YambApplication application;
 	private static final String TIMELINEKEY = "TimeLineActivity_status";
-	private StatusActivity.Status status;
+	//private StatusActivity.Status status;
 	public static String UPDATEVIEW = "UpdateView";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		setContentView(R.layout.activity_timeline);
 		Log.v(ACTIVITY_SERVICE, "Oncreate Timeline");
-
+		
+		// Activitiy without android:label to have the application name, so we need to set the title here 
+		setTitle(R.string.title_activity_timeline);
+		setContentView(R.layout.activity_timeline);
 		
 		final SharedPreferences pref = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
 		maxListItems = Integer.parseInt(pref.getString(PreferencesActivity.MAXMSGKEY, "20"));
@@ -45,7 +46,7 @@ public class TimelineActivity extends BaseActivity {
 			public void completeReport(List<Status> list) {
 				GridView gridView = (GridView) findViewById(R.id.timelineGridView);				
 				gridView.setAdapter(new TimelineAdapter(TimelineActivity.this, list.subList(0, list.size()<maxListItems?list.size():maxListItems)));
-				status = StatusActivity.Status.COMPLETED;
+				//status = StatusActivity.Status.COMPLETED;
 				((Button)findViewById(R.id.Btn_refresh)).setEnabled(true);
 			}
 		});
@@ -100,7 +101,7 @@ public class TimelineActivity extends BaseActivity {
 	}
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		outState.putString(TIMELINEKEY, status.toString());
+		//outState.putString(TIMELINEKEY, status.toString());
 		super.onSaveInstanceState(outState);
 	}
 	
@@ -108,7 +109,7 @@ public class TimelineActivity extends BaseActivity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		
-		status = StatusActivity.Status.valueOf(savedInstanceState.getString(TIMELINEKEY));
-		findViewById(R.id.submitStatusButton).setEnabled(status.compareTo(StatusActivity.Status.COMPLETED) == 0);
+		//status = StatusActivity.Status.valueOf(savedInstanceState.getString(TIMELINEKEY));
+		//findViewById(R.id.submitStatusButton).setEnabled(status.compareTo(StatusActivity.Status.COMPLETED) == 0);
 	}
 }

@@ -21,7 +21,7 @@
     <string name="MaxMensOnTimeLine_text">Num max de mensagens no Cronograma</string>
   	<string name="MaxcharactersbyMsg_text">Num max de caracteres em cada  mensagem</string>
   	<string name="ApplyPref_button">Aceitar</string>
-  	<string name="status_success_msg">Estado submitido com sucesso.</string>
+  	<string name="status_success_msg">Estado \'%s\' submitido com sucesso.</string>
     <string name="status_error_msg">Erro de ligação ao serviço do twitter.</string>
     <string name="messageColumnTitle">Mensagem</string>
     <string name="authorColumnTitle">Autor</string>
