@@ -53,20 +53,21 @@ public class TimelineAdapter extends BaseAdapter {
 			String msg = status.getText();
 			String date;
 			long seg = (new Date().getTime() - status.getCreatedAt().getTime()) / 1000;
-			if(seg < 60){
-				date = seg+" "+context.getString(R.string.timeline_Seconds);
+			if(seg < 60) {
+				date = seg + " " + context.getString(R.string.timeline_Seconds);
 			}
-			else if(seg<3600){
-				date = (seg/60)+" "+context.getString(R.string.timeline_Minutes);
+			else if(seg / 60 < 60) {
+				date = (seg / 60) + " " + context.getString(R.string.timeline_Minutes);
 			}
-			else if(seg<(3600*60)){
-				date = (seg/(3600*60))+" "+context.getString(R.string.timeline_hours);
+			else if(seg / 60 / 60 < 24) {
+				date = (seg / 60 / 60) + " " + context.getString(R.string.timeline_Hours);
 			}
-			else 
-				date = (seg/(3600*60*24))+" Dias";
+			else {
+				date = (seg / 60 / 60 / 24) + " " + context.getString(R.string.timeline_Days);
+			}
 			
 			if(status.getText().length() > NUMOFCHAR){
-				msg = msg.substring(0, NUMOFCHAR-3)+"...";
+				msg = msg.substring(0, NUMOFCHAR - 3) + "...";
 			}
 			((TextView) gridView.findViewById(R.id.messageColumnTextView)).setText(msg);
 			((TextView) gridView.findViewById(R.id.authorColumnTextView)).setText(status.getUser().getName());

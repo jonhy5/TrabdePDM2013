@@ -7,6 +7,9 @@ import winterwell.jtwitter.Twitter.Status;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Messenger;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,46 +17,47 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.Button;
+import android.widget.GridView;
 
 import com.grupo5.trabetapa1.R;
-import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
 import com.grupo5.trabetapa1.main.YambApplication;
 import com.grupo5.trabetapa1.services.TimelinePull;
 
 public class TimelineActivity extends BaseActivity {
-	private int maxListItems;
-	private YambApplication application;
-	private static final String TIMELINEKEY = "TimeLineActivity_status";
-	//private StatusActivity.Status status;
-	public static String UPDATEVIEW = "UpdateView";
+	private static final String TIMELINESTATUSKEY = "TimeLineActivity_status";
+	public static final String EXTRA_MESSENGER = "TimeLineMessenger";
+	private int _maxListItems;
+	private boolean _statusDownload;
+	
+	private final Handler _handler = new Handler() {
+	    @Override
+	    public void handleMessage(Message msg) {
+	    	@SuppressWarnings("unchecked")
+			List<Status> list = (List<Status>) msg.obj;
+	    	
+	    	GridView gridView = (GridView) findViewById(R.id.timelineGridView);				
+			gridView.setAdapter(new TimelineAdapter(TimelineActivity.this, list.subList(0, list.size() < _maxListItems ? list.size(): _maxListItems)));
+			_statusDownload = false;
+			((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownload);
+	    }
+	};
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.v(ACTIVITY_SERVICE, "Oncreate Timeline");
 		
-		// Activitiy without android:label to have the application name, so we need to set the title here 
+		// Activity without android:label to have the application name, so we need to set the title here 
 		setTitle(R.string.title_activity_timeline);
 		setContentView(R.layout.activity_timeline);
 		
 		final SharedPreferences pref = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
-		maxListItems = Integer.parseInt(pref.getString(PreferencesActivity.MAXMSGKEY, "20"));
+		_maxListItems = Integer.parseInt(pref.getString(PreferencesActivity.MAXMSGKEY, "20"));
 		
-		application = (YambApplication) getApplication();
-		application.setUserTimelineListener(new UserTimelineListener() {
-			@Override
-			public void completeReport(List<Status> list) {
-				GridView gridView = (GridView) findViewById(R.id.timelineGridView);				
-				gridView.setAdapter(new TimelineAdapter(TimelineActivity.this, list.subList(0, list.size()<maxListItems?list.size():maxListItems)));
-				//status = StatusActivity.Status.COMPLETED;
-				((Button)findViewById(R.id.Btn_refresh)).setEnabled(true);
-			}
-		});
 		((GridView) findViewById(R.id.timelineGridView)).setOnItemClickListener(new OnItemClickListener() {
 	        @Override
 	        public void onItemClick(AdapterView<?> adapterView, View arg1,int position, long id) {
-
 	        	Log.v(ACTIVITY_SERVICE, "onItemClick");
 
 	        	Status status = (Status) adapterView.getAdapter().getItem(position);
@@ -72,20 +76,17 @@ public class TimelineActivity extends BaseActivity {
 	    });
 
 		((Button)findViewById(R.id.Btn_refresh)).setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				/*((Button)findViewById(R.id.Btn_refresh)).setEnabled(false);
-				application.getUserTimeline(pref.getString(PreferencesActivity.USERNAMEKEY, ""));*/
+				_statusDownload = true;
+				((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownload);
+
 				Intent intent = new Intent(TimelineActivity.this, TimelinePull.class);
 				intent.putExtra(PreferencesActivity.USERNAMEKEY, pref.getString(PreferencesActivity.USERNAMEKEY, "student"));
-				intent.putExtra(UPDATEVIEW, true);
+				intent.putExtra(EXTRA_MESSENGER, new Messenger(_handler));
 				startService(intent);
-						
 			}
 		});
-		//application.getUserTimeline(pref.getString(PreferencesActivity.USERNAMEKEY, ""));
-		
 	}
 
 	@Override
@@ -101,7 +102,8 @@ public class TimelineActivity extends BaseActivity {
 	}
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		//outState.putString(TIMELINEKEY, status.toString());
+		outState.putString(TIMELINESTATUSKEY, Boolean.toString(_statusDownload));
+		
 		super.onSaveInstanceState(outState);
 	}
 	
@@ -109,7 +111,7 @@ public class TimelineActivity extends BaseActivity {
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		
-		//status = StatusActivity.Status.valueOf(savedInstanceState.getString(TIMELINEKEY));
-		//findViewById(R.id.submitStatusButton).setEnabled(status.compareTo(StatusActivity.Status.COMPLETED) == 0);
+		_statusDownload = Boolean.valueOf(savedInstanceState.getString(TIMELINESTATUSKEY));
+		findViewById(R.id.submitStatusButton).setEnabled(!_statusDownload);
 	}
 }
