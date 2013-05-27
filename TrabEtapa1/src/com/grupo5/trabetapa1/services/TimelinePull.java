@@ -13,7 +13,7 @@ import android.util.Log;
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.main.YambApplication;
 
-public class TimelinePull extends IntentService{
+public class TimelinePull extends IntentService {
 	private YambApplication aplication;
 	
 	public TimelinePull() {

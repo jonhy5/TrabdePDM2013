@@ -25,7 +25,7 @@
         <service 
             android:name="com.grupo5.trabetapa1.services.UserInfoService"
             android:process=":remote"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
 		        <action android:name="UserInfoServiceName" />
 		    </intent-filter>
