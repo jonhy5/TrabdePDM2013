@@ -17,16 +17,18 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <service
-            android:name="com.grupo5.trabetapa1.services.StatusUpload"
-        >
+            android:name="com.grupo5.trabetapa1.services.StatusUpload">
         </service>
         <service
-            android:name="com.grupo5.trabetapa1.services.TimelinePull"
-         >
+            android:name="com.grupo5.trabetapa1.services.TimelinePull">
         </service>
         <service 
-            android:name="com.grupo5.trabetapa1.services.UserInfoPull"
-            android:process=":UserInfoPullProcess">
+            android:name="com.grupo5.trabetapa1.services.UserInfoService"
+            android:process=":remote"
+            android:exported="false">
+            <intent-filter>
+		        <action android:name="UserInfoServiceName" />
+		    </intent-filter>
         </service>
 
         <activity

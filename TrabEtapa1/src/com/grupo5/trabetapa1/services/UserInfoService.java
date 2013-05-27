@@ -5,54 +5,37 @@ import winterwell.jtwitter.Twitter.User;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.main.YambApplication;
 
-public class UserInfoPull extends Service {
-
-	private Handler _uiHandler;
-	private  MyParcelable info;
+public class UserInfoService extends Service {
+	private static final String TAG = "UserInfoService";
+	private UserInfoReceiverCallback _userInfoReceiverCallback;
 	
 	@Override
 	public void onCreate() {
+		Log.d(TAG, "onCreate()");
 		super.onCreate();
-		_uiHandler = new Handler();
-	}
-
-	@Override
-	public boolean onUnbind(Intent intent) 
-	{
-		Toast.makeText(this, "onUnbind()", Toast.LENGTH_LONG).show();
-		return super.onUnbind(intent);
-	}
-
-	@Override
-	public void onRebind(Intent intent) 
-	{
-		Toast.makeText(this, "onRebind()", Toast.LENGTH_LONG).show();
-		super.onRebind(intent);
+		_userInfoReceiverCallback = null;
 	}
 	
 	@Override
 	public IBinder onBind(Intent intent) 
 	{
-		Log.v("","OnBind");
+		Log.v(TAG,"OnBind");
 		return new IRemoteBoundService.Stub() {
 			@Override
-			public MyParcelable getStatus() throws RemoteException {
-				
-	   			/*_uiHandler.post(new Runnable() {
-	   				
-	   				@Override
-					public void run() {*/
-						Log.v("InfoPull", "Cheguei ao InfoPull");
-						YambApplication app = (YambApplication)getApplication();
+			public void getStatus() {
+				Thread thread = new Thread() {
+				    @Override
+				    public void run() {
+				    	MyParcelable info;
+				    	
+				    	YambApplication app = (YambApplication)getApplication();
 						SharedPreferences pref = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
 						String name = pref.getString(PreferencesActivity.USERNAMEKEY, "student");
 						
@@ -69,12 +52,34 @@ public class UserInfoPull extends Service {
 						image = user.getProfileBackgroundImageUrl().toString();
 						
 						info = new MyParcelable(name, statusCount,friendsCount, followersCount, image);
-					/*}
-				});*/
-	   			Log.v("Leave","OnBind");
-				return info;
+						
+						if(_userInfoReceiverCallback != null) {
+							try {
+								_userInfoReceiverCallback.UserInfoReceiver(info);
+							} catch (RemoteException e) {
+								e.printStackTrace();
+							}
+						}
+				    }
+				};
+				thread.start();
+			}
+			
+			@Override
+			public void setCallback(UserInfoReceiverCallback callback) {
+				_userInfoReceiverCallback = callback;
+			}
+			
+			@Override
+			public void unsetCallback() {
+				_userInfoReceiverCallback = null;
 			}
 		};
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Log.d(TAG, "onDestroy()");
+	}
 }
