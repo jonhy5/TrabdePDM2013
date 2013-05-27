@@ -1,48 +1,49 @@
 package com.grupo5.trabetapa1.services;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class MyParcelable implements Parcelable{
+public class UserInfo implements Parcelable{
 
 	private String screenName;
 	private int statusCount;
 	private int friendsCount;
 	private int followersCount;
-	private String  imageUrl;
+	private String image;
+	private Bitmap imageBitmap;
 	
-	
-	public static final Parcelable.Creator<MyParcelable> CREATOR = new Parcelable.Creator<MyParcelable>()
+	public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>()
 	{
 		@Override
-    	public MyParcelable createFromParcel(Parcel in)
+    	public UserInfo createFromParcel(Parcel in)
     	{
-            return new MyParcelable(in);
+            return new UserInfo(in);
     	}
 
-        public MyParcelable[] newArray(int size) {
+        public UserInfo[] newArray(int size) {
             throw new UnsupportedOperationException();
         }
 
     };
     
-    public MyParcelable(Parcel in)
+    public UserInfo(Parcel in)
 	{
     	screenName = in.readString();
     	statusCount = in.readInt();
     	friendsCount = in.readInt();
     	followersCount = in.readInt();
-    	imageUrl = in.readString();
-  	
+    	image = in.readString();
+    	imageBitmap = (Bitmap)in.readParcelable(Bitmap.class.getClassLoader());
     }
     
-	public MyParcelable(String name, int sc, int friends, int follower, String image)
-	{
+	public UserInfo(String name, int sc, int friends, int follower, String img, Bitmap bitmap) {
 		screenName = name;
     	statusCount = sc;
     	friendsCount = friends;
     	followersCount = follower;
-    	imageUrl = image;
+    	image = img;
+    	imageBitmap = bitmap;
 	}
     
 	@Override
@@ -57,12 +58,11 @@ public class MyParcelable implements Parcelable{
 		out.writeInt(statusCount);
 		out.writeInt(friendsCount);
 		out.writeInt(followersCount);
-		out.writeString(imageUrl);
-		
+		out.writeString(image);
+		out.writeParcelable(imageBitmap, flags);
 	}
 	
-	public String getName()
-	{
+	public String getName() {
 		return screenName;
 	}
 	
@@ -81,5 +81,13 @@ public class MyParcelable implements Parcelable{
 		return followersCount;
 	}
 	
+	public String getImageUri()
+	{
+		return image;
+	}
 	
+	public Bitmap getImageBitmap()
+	{
+		return imageBitmap;
+	}
 }

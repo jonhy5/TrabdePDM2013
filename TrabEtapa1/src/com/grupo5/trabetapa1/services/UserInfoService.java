@@ -1,10 +1,15 @@
 package com.grupo5.trabetapa1.services;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import winterwell.jtwitter.Twitter.User;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
@@ -33,7 +38,7 @@ public class UserInfoService extends Service {
 				Thread thread = new Thread() {
 				    @Override
 				    public void run() {
-				    	MyParcelable info;
+				    	UserInfo info;
 				    	
 				    	YambApplication app = (YambApplication)getApplication();
 						SharedPreferences pref = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
@@ -49,10 +54,17 @@ public class UserInfoService extends Service {
 						statusCount = user.getStatusesCount();
 						friendsCount = user.getFriendsCount();
 						followersCount = user.getFollowersCount();
-						image = user.getProfileBackgroundImageUrl().toString();
-						
-						info = new MyParcelable(name, statusCount,friendsCount, followersCount, image);
-						
+						image = user.getProfileImageUrl().toString();
+						Bitmap bitmap = null;
+						try {
+							bitmap = BitmapFactory.decodeStream(new URL(image).openConnection().getInputStream());
+						} catch (MalformedURLException e1) {
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}						
+						info = new UserInfo(name, statusCount, friendsCount, followersCount, image, bitmap);
+
 						if(_userInfoReceiverCallback != null) {
 							try {
 								_userInfoReceiverCallback.UserInfoReceiver(info);

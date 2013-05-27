@@ -8,18 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".UserInfoActivity" >
 
-    <EditText
-        android:id="@+id/edtNameUserInfo"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="38dp"
-        android:layout_marginTop="41dp"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
+        android:contentDescription="@string/imageviewdesc"
+        android:src="@drawable/ic_launcher" />
 
     <EditText
         android:id="@+id/edtStatusCountUserInfo"
@@ -56,5 +50,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:text="Button" />
+
+    <EditText
+        android:id="@+id/edtNameUserInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_below="@+id/imageView"
+        android:ems="10" />
 
 </RelativeLayout>

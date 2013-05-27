@@ -39,5 +39,6 @@
     <string name="Refresh_Button">Refresh</string>
     <string name="title_activity_user_info">UserInfoActivity</string>
     <string name="UserInfo">UsrInfo</string>
+    <string name="imageviewdesc">User Image</string>
 
 </resources>
