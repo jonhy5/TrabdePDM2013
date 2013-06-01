@@ -55,14 +55,8 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			Intent newActivity = new Intent(this, PreferencesActivity.class);
 			newActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(newActivity);
-		}
-		AlarmManager mng = (AlarmManager)getSystemService(ALARM_SERVICE);
-		Intent timepull = new Intent(this, TimelinePull.class);
-		timepull.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
-		timepull.putExtra(EXTRA_MESSENGER, new Messenger(_timepullHandler));
-		intentPull = PendingIntent.getService(this, 1, timepull, PendingIntent.FLAG_CANCEL_CURRENT);
-		// Start 30 seconds after application boot and repeat every 5 minutes
-		mng.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + 30000, 300000, intentPull);
+		}		
+		startRepeatTimelinePull();
 	}
 	
 	public synchronized Twitter getTwitter() {
@@ -78,6 +72,16 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			
 	public void setUserTimelineListener(UserTimelineListener listener) {
 		userTimelineListener = listener;
+	}
+	
+	private void startRepeatTimelinePull() {
+		AlarmManager mng = (AlarmManager)getSystemService(ALARM_SERVICE);
+		Intent timepull = new Intent(this, TimelinePull.class);
+		timepull.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
+		timepull.putExtra(EXTRA_MESSENGER, new Messenger(_timepullHandler));
+		intentPull = PendingIntent.getService(this, 1, timepull, PendingIntent.FLAG_CANCEL_CURRENT);
+		// Start 30 seconds after application boot and repeat every 5 minutes
+		mng.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + 30000, 300000, intentPull);
 	}
 	
 	public void lunchTimelinePull() {

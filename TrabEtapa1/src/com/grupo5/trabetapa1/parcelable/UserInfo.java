@@ -1,11 +1,13 @@
-package com.grupo5.trabetapa1.services;
+/**
+ * Parcelable with UserInfo details
+ */
+package com.grupo5.trabetapa1.parcelable;
 
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class UserInfo implements Parcelable{
-
+public class UserInfo implements Parcelable {
 	private String screenName;
 	private int statusCount;
 	private int friendsCount;
@@ -13,22 +15,18 @@ public class UserInfo implements Parcelable{
 	private String image;
 	private Bitmap imageBitmap;
 	
-	public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>()
-	{
+	public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
 		@Override
-    	public UserInfo createFromParcel(Parcel in)
-    	{
+    	public UserInfo createFromParcel(Parcel in) {
             return new UserInfo(in);
     	}
 
         public UserInfo[] newArray(int size) {
             throw new UnsupportedOperationException();
         }
-
     };
     
-    public UserInfo(Parcel in)
-	{
+    public UserInfo(Parcel in) {
     	screenName = in.readString();
     	statusCount = in.readInt();
     	friendsCount = in.readInt();
@@ -48,7 +46,6 @@ public class UserInfo implements Parcelable{
     
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -66,28 +63,23 @@ public class UserInfo implements Parcelable{
 		return screenName;
 	}
 	
-	public int getStatusCount()
-	{
+	public int getStatusCount() {
 		return statusCount;
 	}
 	
-	public int getFriendsCount()
-	{
+	public int getFriendsCount() {
 		return friendsCount;
 	}
 	
-	public int getFollowersCount()
-	{
+	public int getFollowersCount() {
 		return followersCount;
 	}
 	
-	public String getImageUri()
-	{
+	public String getImageUri() {
 		return image;
 	}
 	
-	public Bitmap getImageBitmap()
-	{
+	public Bitmap getImageBitmap() {
 		return imageBitmap;
 	}
 }

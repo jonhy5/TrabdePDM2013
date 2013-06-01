@@ -1,17 +1,9 @@
 package com.grupo5.trabetapa1.activities;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -24,8 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.grupo5.trabetapa1.R;
+import com.grupo5.trabetapa1.parcelable.UserInfo;
 import com.grupo5.trabetapa1.services.IRemoteBoundService;
-import com.grupo5.trabetapa1.services.UserInfo;
 import com.grupo5.trabetapa1.services.UserInfoReceiverCallback;
 
 public class UserInfoActivity extends Activity {

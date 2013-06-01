@@ -20,6 +20,7 @@ import android.widget.GridView;
 import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
 import com.grupo5.trabetapa1.main.YambApplication;
+import com.grupo5.trabetapa1.parcelable.DetailData;
 
 public class TimelineActivity extends BaseActivity implements UserTimelineListener {
 	private static final String TIMELINESTATUSKEY = "TimeLineActivity_status";

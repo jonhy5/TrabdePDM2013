@@ -17,6 +17,7 @@ import android.util.Log;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.main.YambApplication;
+import com.grupo5.trabetapa1.parcelable.UserInfo;
 
 public class UserInfoService extends Service {
 	private static final String TAG = "UserInfoService";

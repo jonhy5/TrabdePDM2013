@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.grupo5.trabetapa1.R;
+import com.grupo5.trabetapa1.parcelable.DetailData;
 
 public class DetailedActivity extends Activity {
 
