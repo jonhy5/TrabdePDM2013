@@ -1,9 +1,6 @@
 package com.grupo5.trabetapa1.main;
 
-import java.util.List;
-
 import winterwell.jtwitter.Twitter;
-import winterwell.jtwitter.Twitter.Status;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Application;
@@ -27,7 +24,6 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 	private static final String TAG = YambApplication.class.getSimpleName();
 	private SharedPreferences prefs;
 	private UserTimelineListener userTimelineListener;
-	private List<Status> statusList = null;
 	// Singleton Class twitter;
 	private Twitter twitter;
 	
@@ -35,12 +31,10 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 	private PendingIntent intentPull;
 	
 	private final Handler _timepullHandler = new Handler() {
-		@SuppressWarnings("unchecked")
 		@Override
 	    public void handleMessage(Message msg) {
-			statusList = (List<Status>) msg.obj;
 			if(userTimelineListener != null) {
-				userTimelineListener.completeReport(statusList);
+				userTimelineListener.completeReport();
 			}
 	    }
 	};
@@ -78,6 +72,7 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		AlarmManager mng = (AlarmManager)getSystemService(ALARM_SERVICE);
 		Intent timepull = new Intent(this, TimelinePull.class);
 		timepull.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
+		timepull.putExtra(PreferencesActivity.MAXMSGKEY, Integer.parseInt(prefs.getString(PreferencesActivity.MAXMSGKEY, "20")));
 		timepull.putExtra(EXTRA_MESSENGER, new Messenger(_timepullHandler));
 		intentPull = PendingIntent.getService(this, 1, timepull, PendingIntent.FLAG_CANCEL_CURRENT);
 		// Start 30 seconds after application boot and repeat every 5 minutes
@@ -87,12 +82,9 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 	public void lunchTimelinePull() {
 		Intent intent = new Intent(this, TimelinePull.class);
 		intent.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
+		intent.putExtra(PreferencesActivity.MAXMSGKEY, Integer.parseInt(prefs.getString(PreferencesActivity.MAXMSGKEY, "20")));
 		intent.putExtra(YambApplication.EXTRA_MESSENGER, new Messenger(_timepullHandler));
 		startService(intent);
-	}
-	
-	public List<Status> getStatusList() {
-		return statusList;
 	}
 	
 	@Override

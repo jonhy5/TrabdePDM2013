@@ -1,11 +1,8 @@
 package com.grupo5.trabetapa1.activities;
 
-import java.util.Date;
 import java.util.List;
 
-import winterwell.jtwitter.Twitter.Status;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,51 +18,46 @@ import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
 import com.grupo5.trabetapa1.main.YambApplication;
 import com.grupo5.trabetapa1.parcelable.DetailData;
+import com.grupo5.trabetapa1.sql.StatusDataSource;
+import com.grupo5.trabetapa1.sql.StatusModel;
 
 public class TimelineActivity extends BaseActivity implements UserTimelineListener {
 	private static final String TIMELINESTATUSKEY = "TimeLineActivity_status";
 	private YambApplication application;
-	private int _maxListItems;
-	private boolean _statusDownload;
+	private StatusDataSource datasource;
+	
+	
+	private boolean _statusDownloading;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.v(ACTIVITY_SERVICE, "Oncreate Timeline");
 
-		final SharedPreferences pref = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
-		_maxListItems = Integer.parseInt(pref.getString(PreferencesActivity.MAXMSGKEY, "20"));
-		
 		application = (YambApplication) getApplication();
 		application.setUserTimelineListener(this);
-				
+		
+		datasource = new StatusDataSource(this);
+	    datasource.open();
+
 		// Activity without android:label to have the application name, so we need to set the title here 
 		setTitle(R.string.title_activity_timeline);
 		setContentView(R.layout.activity_timeline);
-		
-		if(application.getStatusList() == null) {
-			_statusDownload = true;
-			((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownload);
-
-			application.lunchTimelinePull();
-		} else {
-			completeReport(application.getStatusList());
-		}
 
 		((GridView) findViewById(R.id.timelineGridView)).setOnItemClickListener(new OnItemClickListener() {
 	        @Override
-	        public void onItemClick(AdapterView<?> adapterView, View arg1,int position, long id) {
+	        public void onItemClick(AdapterView<?> adapterView, View arg1, int position, long id) {
 	        	Log.v(ACTIVITY_SERVICE, "onItemClick");
 
-	        	Status status = (Status) adapterView.getAdapter().getItem(position);
+	        	StatusModel status = (StatusModel) adapterView.getAdapter().getItem(position);
 	        	
 	    		Intent intent = new Intent(TimelineActivity.this, DetailedActivity.class);
 	    		long nr = status.getId();
-	    		String user = status.getUser().getName();
-	    		String msg = status.getText();
-	    		Date dt = (Date) status.getCreatedAt();
+	    		String user = status.getAuthor();
+	    		String msg = status.getMessage();
+	    		long dt = status.getDate();
 	    		
-	    		DetailData d = new DetailData(nr, user, msg, dt.getTime() );
+	    		DetailData d = new DetailData(nr, user, msg, dt);
 	    		intent.putExtra("detail", d);
 
 	    		startActivity(intent);
@@ -75,12 +67,18 @@ public class TimelineActivity extends BaseActivity implements UserTimelineListen
 		((Button)findViewById(R.id.Btn_refresh)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				_statusDownload = true;
-				((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownload);
+				_statusDownloading = true;
+				((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownloading);
 
 				application.lunchTimelinePull();
 			}
 		});
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		completeReport();
 	}
 
 	@Override
@@ -96,7 +94,7 @@ public class TimelineActivity extends BaseActivity implements UserTimelineListen
 	}
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		outState.putString(TIMELINESTATUSKEY, Boolean.toString(_statusDownload));
+		outState.putString(TIMELINESTATUSKEY, Boolean.toString(_statusDownloading));
 		
 		super.onSaveInstanceState(outState);
 	}
@@ -105,21 +103,25 @@ public class TimelineActivity extends BaseActivity implements UserTimelineListen
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		
-		_statusDownload = Boolean.valueOf(savedInstanceState.getString(TIMELINESTATUSKEY));
-		findViewById(R.id.submitStatusButton).setEnabled(!_statusDownload);
+		_statusDownloading = Boolean.valueOf(savedInstanceState.getString(TIMELINESTATUSKEY));
+		findViewById(R.id.submitStatusButton).setEnabled(!_statusDownloading);
 	}
 
 	@Override
-	public void completeReport(List<Status> list) {
-		GridView gridView = (GridView) findViewById(R.id.timelineGridView);				
-		gridView.setAdapter(new TimelineAdapter(TimelineActivity.this, list.subList(0, list.size() < _maxListItems ? list.size(): _maxListItems)));
-		_statusDownload = false;
-		((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownload);
+	public void completeReport() {
+		List<StatusModel> list = datasource.getAllStatus();
+		
+		GridView gridView = (GridView) findViewById(R.id.timelineGridView);
+		gridView.setAdapter(new TimelineAdapter(TimelineActivity.this, list));
+		
+		_statusDownloading = false;
+		((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownloading);
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		application.setUserTimelineListener(null);
+		datasource.close();
 		super.onDestroy();
 	}
 }

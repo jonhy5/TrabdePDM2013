@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.parcelable.UserInfo;
 import com.grupo5.trabetapa1.services.IRemoteBoundService;
-import com.grupo5.trabetapa1.services.UserInfoReceiverCallback;
+import com.grupo5.trabetapa1.services.UserInfoReceiver;
 
 public class UserInfoActivity extends Activity {
 	
@@ -33,7 +33,7 @@ public class UserInfoActivity extends Activity {
 			Log.w("UI", "onServiceConnected");
 			_remoteServive = IRemoteBoundService.Stub.asInterface(service);
 			
-			UserInfoReceiverCallback callback = new UserInfoReceiverCallback.Stub() {
+			UserInfoReceiver callback = new UserInfoReceiver.Stub() {
 				public void UserInfoReceiver(final UserInfo myInfo) throws RemoteException {
 					_uiHandler.post(new Runnable() {
 						@Override
@@ -44,7 +44,7 @@ public class UserInfoActivity extends Activity {
 							((TextView) findViewById(R.id.edtFollowersCountUserInfo)).setText(Integer.toString(myInfo.getFollowersCount()));
 							((ImageView) findViewById(R.id.imageView)).setImageBitmap(myInfo.getImageBitmap());
 						}
-					});					
+					});
 				}
 			};
 

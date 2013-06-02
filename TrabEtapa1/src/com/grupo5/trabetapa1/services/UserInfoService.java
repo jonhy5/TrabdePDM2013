@@ -21,13 +21,13 @@ import com.grupo5.trabetapa1.parcelable.UserInfo;
 
 public class UserInfoService extends Service {
 	private static final String TAG = "UserInfoService";
-	private UserInfoReceiverCallback _userInfoReceiverCallback;
+	private UserInfoReceiver _userInfoReceiver;
 	
 	@Override
 	public void onCreate() {
 		Log.d(TAG, "onCreate()");
 		super.onCreate();
-		_userInfoReceiverCallback = null;
+		_userInfoReceiver = null;
 	}
 	
 	@Override
@@ -67,9 +67,9 @@ public class UserInfoService extends Service {
 				}						
 				info = new UserInfo(name, statusCount, friendsCount, followersCount, image, bitmap);
 
-				if(_userInfoReceiverCallback != null) {
+				if(_userInfoReceiver != null) {
 					try {
-						_userInfoReceiverCallback.UserInfoReceiver(info);
+						_userInfoReceiver.UserInfoReceiver(info);
 					} catch (RemoteException e) {
 						e.printStackTrace();
 					}
@@ -77,13 +77,13 @@ public class UserInfoService extends Service {
 			}
 			
 			@Override
-			public void setCallback(UserInfoReceiverCallback callback) {
-				_userInfoReceiverCallback = callback;
+			public void setCallback(UserInfoReceiver callback) {
+				_userInfoReceiver = callback;
 			}
 			
 			@Override
 			public void unsetCallback() {
-				_userInfoReceiverCallback = null;
+				_userInfoReceiver = null;
 			}
 		};
 	}
