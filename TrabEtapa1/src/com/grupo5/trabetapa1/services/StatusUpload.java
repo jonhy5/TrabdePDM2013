@@ -36,6 +36,7 @@ public class StatusUpload extends IntentService {
 	protected void onHandleIntent(final Intent intent) {
 		Log.v("OnHandleINtent","Status Upload");
 
+		//Fazer aqui a avalição se o device tem ou conectividade.
 		final String name = intent.getStringExtra(EXTRA_KEY);
 		_aplication.getTwitter().updateStatus(name);
 		

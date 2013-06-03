@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.grupo5.trabetapa1.R;
@@ -18,6 +19,7 @@ public class PreferencesActivity extends Activity {
 	public static final String BASEURIKEY = "BaseUri";
 	public static final String MAXMSGKEY = "MaxMsg";
 	public static final String MAXCHARKEY = "MaxChar";
+	public static final String AUTOUP ="AutoUp";
 	private SharedPreferences pref;
 
 	@Override
@@ -44,6 +46,7 @@ public class PreferencesActivity extends Activity {
 				edit.putString(BASEURIKEY,((EditText) findViewById(R.id.baseURI)).getText().toString());
 				edit.putString(MAXMSGKEY,((EditText) findViewById(R.id.MaxNumMsg)).getText().toString());
 				edit.putString(MAXCHARKEY,((EditText) findViewById(R.id.NumChar)).getText().toString());
+				edit.putBoolean(AUTOUP, ((CheckBox)findViewById(R.id.Autup)).isChecked());
 				edit.commit();
 				
 				finish();
