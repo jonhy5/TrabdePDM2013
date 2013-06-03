@@ -1,6 +1,10 @@
 package com.grupo5.trabetapa1.services;
-import com.grupo5.trabetapa1.services.MyParcelable;
+
+import com.grupo5.trabetapa1.parcelable.UserInfo;
+import com.grupo5.trabetapa1.services.UserInfoReceiver;
 
 interface IRemoteBoundService {
-	MyParcelable getStatus();  
+	void getStatus();
+	void setCallback(UserInfoReceiver callback);
+	void unsetCallback();
 }

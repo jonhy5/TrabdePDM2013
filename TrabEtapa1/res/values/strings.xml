@@ -23,20 +23,22 @@
     <string name="MaxcharactersbyMsg_text">Max characters on each message</string>
     <string name="ApplyPref_button">Apply</string>
     <string name="timeline_list">Timeline list</string>
-    <string name="status_success_msg">Status successfully submited.</string>
+    <string name="status_success_msg">Status \'%s\' successfully submited.</string>
     <string name="status_error_msg">Failed to connect to twitter service.</string>
     <string name="messageColumnTitle">Message</string>
     <string name="authorColumnTitle">Author</string>
     <string name="dateColumnTitle">Date</string>
     <string name="txVw2_text">140</string>
     <string name="Detail"></string>
-    <string name="timeline_hours">Hours</string>
+    <string name="timeline_Hours">Hours</string>
     <string name="timeline_Minutes">Minutes</string>
+    <string name="timeline_Seconds">Seconds</string>
+    <string name="timeline_Days">Days</string>
     <string name="OK"></string>
     <string name="btnOK">OK</string>
-    <string name="timeline_Seconds">Seconds</string>
     <string name="Refresh_Button">Refresh</string>
     <string name="title_activity_user_info">UserInfoActivity</string>
     <string name="UserInfo">UsrInfo</string>
+    <string name="imageviewdesc">User Image</string>
 
 </resources>

@@ -17,24 +17,24 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <service
-            android:name="com.grupo5.trabetapa1.services.StatusUpload"
-        >
+            android:name="com.grupo5.trabetapa1.services.StatusUpload">
         </service>
         <service
-            android:name="com.grupo5.trabetapa1.services.TimelinePull"
-         >
+            android:name="com.grupo5.trabetapa1.services.TimelinePull">
         </service>
         <service 
-            android:name="com.grupo5.trabetapa1.services.UserInfoPull"
-            android:process="com.grupo5.trabetapa1.services.Other">
+            android:name="com.grupo5.trabetapa1.services.UserInfoService"
+            android:process=":remote"
+            android:exported="true">
+            <intent-filter>
+		        <action android:name="UserInfoServiceName" />
+		    </intent-filter>
         </service>
 
         <activity
-            android:name="com.grupo5.trabetapa1.activities.TimelineActivity"
-            android:label="@string/title_activity_timeline" >
+            android:name="com.grupo5.trabetapa1.activities.TimelineActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -64,5 +64,4 @@
             android:label="@string/title_activity_user_info" >
         </activity>
     </application>
-
 </manifest>
