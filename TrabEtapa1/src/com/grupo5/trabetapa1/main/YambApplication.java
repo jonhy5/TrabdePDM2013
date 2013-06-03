@@ -35,8 +35,10 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			Intent newActivity = new Intent(this, PreferencesActivity.class);
 			newActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(newActivity);
-		}		
-		startRepeatTimelinePull();
+		}
+		if(prefs.getBoolean(PreferencesActivity.AUTOUP, true)) {
+			startRepeatTimelinePull();
+		}
 	}
 	
 	public synchronized Twitter getTwitter() {
@@ -57,7 +59,7 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		timepull.putExtra(PreferencesActivity.MAXMSGKEY, Integer.parseInt(prefs.getString(PreferencesActivity.MAXMSGKEY, "20")));
 		intentPull = PendingIntent.getService(this, 1, timepull, PendingIntent.FLAG_CANCEL_CURRENT);
 		// Start 30 seconds after application boot and repeat every 5 minutes
-		mng.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + 30000, 300000, intentPull);
+		mng.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + 30000, 3000, intentPull);
 	}
 	
 	@Override
@@ -67,6 +69,15 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			key.equals(PreferencesActivity.PASSWORDKEY) ||
 			key.equals(PreferencesActivity.BASEURIKEY)) {
 			twitter = null;
+		}
+		if(key.equals(PreferencesActivity.AUTOUP)) {
+			AlarmManager mng = (AlarmManager)getSystemService(ALARM_SERVICE);
+			// Arrancar/Parar o servico de actualizacao da timeline
+			if(sharedPreferences.getBoolean(PreferencesActivity.AUTOUP, true)) {
+				startRepeatTimelinePull();
+			} else {				
+				mng.cancel(intentPull);
+			}
 		}
 	}
 }
