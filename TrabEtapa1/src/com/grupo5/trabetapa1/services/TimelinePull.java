@@ -5,16 +5,16 @@ import java.util.List;
 import winterwell.jtwitter.Twitter.Status;
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Message;
-import android.os.Messenger;
-import android.util.Log;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.main.YambApplication;
+import com.grupo5.trabetapa1.sql.SQLiteStatusHelper;
 import com.grupo5.trabetapa1.sql.StatusDataSource;
 
 public class TimelinePull extends IntentService {
+	public static final String TIMELINEPULL_ACTION = "timelinepull";
+	public static final String NEWROWS_EXTRA = "newrows";
 	private YambApplication aplication;
 	private StatusDataSource datasource;
 	
@@ -32,35 +32,28 @@ public class TimelinePull extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		int maxListItems, inserted;
+		int maxListItems, toDelete;
 		String user;
-		Bundle extras;
 		
 		user = intent.getStringExtra(PreferencesActivity.USERNAMEKEY);
 		maxListItems = intent.getIntExtra(PreferencesActivity.MAXMSGKEY, 0);
-		inserted = 0;
-		
+
 		List<Status> statusList = aplication.getTwitter().getUserTimeline(user);
+		int total = datasource.rowCount();
 		for(Status st: statusList) {
 			if(datasource.createStatus(st.getId(), st.getText(), st.getUser().getName(), st.getCreatedAt().getTime()) != null) {
-				inserted++;
+				total++;
 			}
 		}
-
-		
-		
-		extras = intent.getExtras();
-		if (extras != null) {
-			// TODO
-			Messenger messenger = (Messenger) extras.get(YambApplication.EXTRA_MESSENGER);
-			Message msg = Message.obtain();
-			try {
-				messenger.send(msg);
-			}
-			catch (android.os.RemoteException e) {
-		        Log.w(getClass().getName(), "Exception sending message", e);
-			}
+		toDelete = total - maxListItems;
+		if(toDelete > 0) {
+			datasource.delete(SQLiteStatusHelper.COLUMN_ID + " IN (SELECT " + SQLiteStatusHelper.COLUMN_ID + " FROM " + SQLiteStatusHelper.TABLE_STATUS + " ORDER BY " + SQLiteStatusHelper.COLUMN_ID + " LIMIT " + toDelete + ")");
 		}
+		
+		// Notify activity that the TimelinePull is finished
+		Intent broadIntent = new Intent(TIMELINEPULL_ACTION);
+		broadIntent.putExtra(NEWROWS_EXTRA, toDelete);
+		LocalBroadcastManager.getInstance(this).sendBroadcast(broadIntent);
 	}
 	
 	@Override

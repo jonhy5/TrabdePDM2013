@@ -1,9 +1,15 @@
 package com.grupo5.trabetapa1.activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,27 +21,28 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.grupo5.trabetapa1.R;
-import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
 import com.grupo5.trabetapa1.main.YambApplication;
 import com.grupo5.trabetapa1.parcelable.DetailData;
+import com.grupo5.trabetapa1.services.TimelinePull;
 import com.grupo5.trabetapa1.sql.StatusDataSource;
 import com.grupo5.trabetapa1.sql.StatusModel;
 
-public class TimelineActivity extends BaseActivity implements UserTimelineListener {
+public class TimelineActivity extends BaseActivity {
 	private static final String TIMELINESTATUSKEY = "TimeLineActivity_status";
-	private YambApplication application;
 	private StatusDataSource datasource;
-	
-	
 	private boolean _statusDownloading;
+	private BroadcastReceiver _onComplete = new BroadcastReceiver() {
+	    @Override
+	    public void onReceive(Context context, Intent intent) {
+	    	int rows = intent.getIntExtra(TimelinePull.NEWROWS_EXTRA, 0);
+	    	updateGridView(rows);
+	    }
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.v(ACTIVITY_SERVICE, "Oncreate Timeline");
-
-		application = (YambApplication) getApplication();
-		application.setUserTimelineListener(this);
 		
 		datasource = new StatusDataSource(this);
 	    datasource.open();
@@ -43,7 +50,8 @@ public class TimelineActivity extends BaseActivity implements UserTimelineListen
 		// Activity without android:label to have the application name, so we need to set the title here 
 		setTitle(R.string.title_activity_timeline);
 		setContentView(R.layout.activity_timeline);
-
+		
+		((GridView) findViewById(R.id.timelineGridView)).setAdapter(new TimelineAdapter(TimelineActivity.this, R.id.timelineGridView, new ArrayList<StatusModel>()));
 		((GridView) findViewById(R.id.timelineGridView)).setOnItemClickListener(new OnItemClickListener() {
 	        @Override
 	        public void onItemClick(AdapterView<?> adapterView, View arg1, int position, long id) {
@@ -70,7 +78,11 @@ public class TimelineActivity extends BaseActivity implements UserTimelineListen
 				_statusDownloading = true;
 				((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownloading);
 
-				application.lunchTimelinePull();
+				Intent intent = new Intent(TimelineActivity.this, TimelinePull.class);
+				SharedPreferences prefs = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
+				intent.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
+				intent.putExtra(PreferencesActivity.MAXMSGKEY, Integer.parseInt(prefs.getString(PreferencesActivity.MAXMSGKEY, "20")));
+				startService(intent);
 			}
 		});
 	}
@@ -78,9 +90,39 @@ public class TimelineActivity extends BaseActivity implements UserTimelineListen
 	@Override
 	protected void onStart() {
 		super.onStart();
-		completeReport();
+		updateGridView(1);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		IntentFilter iff = new IntentFilter(TimelinePull.TIMELINEPULL_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(_onComplete, iff);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(_onComplete);
 	}
 
+	// Update gridView
+	private void updateGridView(int rows) {
+		// Se existirem novas rows, actualizar gridView
+    	if(rows > 0) {
+	    	List<StatusModel> list = datasource.getAllStatus();
+			
+			GridView gridView = (GridView) findViewById(R.id.timelineGridView);
+			TimelineAdapter adapter = (TimelineAdapter)gridView.getAdapter();
+			adapter.clear();
+			adapter.addAll(list);
+			adapter.notifyDataSetChanged();
+    	}
+		_statusDownloading = false;
+		((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownloading);	    
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -108,19 +150,7 @@ public class TimelineActivity extends BaseActivity implements UserTimelineListen
 	}
 
 	@Override
-	public void completeReport() {
-		List<StatusModel> list = datasource.getAllStatus();
-		
-		GridView gridView = (GridView) findViewById(R.id.timelineGridView);
-		gridView.setAdapter(new TimelineAdapter(TimelineActivity.this, list));
-		
-		_statusDownloading = false;
-		((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownloading);
-	}
-
-	@Override
 	protected void onDestroy() {
-		application.setUserTimelineListener(null);
 		datasource.close();
 		super.onDestroy();
 	}

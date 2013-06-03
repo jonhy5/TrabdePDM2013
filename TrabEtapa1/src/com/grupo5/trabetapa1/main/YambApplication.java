@@ -8,13 +8,9 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Messenger;
 import android.util.Log;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
-import com.grupo5.trabetapa1.interfaces.UserTimelineListener;
 import com.grupo5.trabetapa1.services.TimelinePull;
 
 @SuppressLint("HandlerLeak")
@@ -23,22 +19,12 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 	
 	private static final String TAG = YambApplication.class.getSimpleName();
 	private SharedPreferences prefs;
-	private UserTimelineListener userTimelineListener;
 	// Singleton Class twitter;
 	private Twitter twitter;
 	
 	public static final String preferencesFileName = "ClientPrefs";
 	private PendingIntent intentPull;
-	
-	private final Handler _timepullHandler = new Handler() {
-		@Override
-	    public void handleMessage(Message msg) {
-			if(userTimelineListener != null) {
-				userTimelineListener.completeReport();
-			}
-	    }
-	};
-	
+		
 	public void onCreate() {
 		super.onCreate();
 		Log.i(TAG, "onCreate");
@@ -64,27 +50,14 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		return this.twitter;
 	}
 			
-	public void setUserTimelineListener(UserTimelineListener listener) {
-		userTimelineListener = listener;
-	}
-	
 	private void startRepeatTimelinePull() {
 		AlarmManager mng = (AlarmManager)getSystemService(ALARM_SERVICE);
 		Intent timepull = new Intent(this, TimelinePull.class);
 		timepull.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
 		timepull.putExtra(PreferencesActivity.MAXMSGKEY, Integer.parseInt(prefs.getString(PreferencesActivity.MAXMSGKEY, "20")));
-		timepull.putExtra(EXTRA_MESSENGER, new Messenger(_timepullHandler));
 		intentPull = PendingIntent.getService(this, 1, timepull, PendingIntent.FLAG_CANCEL_CURRENT);
 		// Start 30 seconds after application boot and repeat every 5 minutes
 		mng.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + 30000, 300000, intentPull);
-	}
-	
-	public void lunchTimelinePull() {
-		Intent intent = new Intent(this, TimelinePull.class);
-		intent.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
-		intent.putExtra(PreferencesActivity.MAXMSGKEY, Integer.parseInt(prefs.getString(PreferencesActivity.MAXMSGKEY, "20")));
-		intent.putExtra(YambApplication.EXTRA_MESSENGER, new Messenger(_timepullHandler));
-		startService(intent);
 	}
 	
 	@Override
