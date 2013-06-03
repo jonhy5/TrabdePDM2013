@@ -115,4 +115,12 @@
         android:layout_below="@+id/NumCharInMsg"
         android:ems="10" />
 
+    <CheckBox
+        android:id="@+id/Autup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/but1_PrefApply"
+        android:layout_alignLeft="@+id/but1_PrefApply"
+        android:text="@string/AutoUp" />
+
 </RelativeLayout>

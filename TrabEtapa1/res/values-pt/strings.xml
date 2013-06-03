@@ -33,4 +33,5 @@
     <string name="Refresh_Button">Atualizar</string>
     <string name="UserInfo">UsrInfo</string>
     <string name="imageviewdesc">Imagem do Utilizador</string>
+    <string name="AutoUp">Actulização Automatica</string>
 </resources>
