@@ -58,6 +58,14 @@ public class StatusDataSource {
 	    database.delete(SQLiteStatusHelper.TABLE_STATUS, SQLiteStatusHelper.COLUMN_ID + " = " + id, null);
 	}
 	
+	public void delete(String where) {
+	    database.delete(SQLiteStatusHelper.TABLE_STATUS, where, null);
+	}
+	
+	public void deleteAll() {
+	    delete(null);
+	}
+	
 	public List<StatusModel> getAllStatus() {
 	    List<StatusModel> status = new ArrayList<StatusModel>();
 
@@ -71,6 +79,15 @@ public class StatusDataSource {
 	    // Make sure to close the cursor
 	    cursor.close();
 	    return status;
+	}
+	
+	public int rowCount() {
+		Cursor mCount = database.rawQuery("select count(*) from " + SQLiteStatusHelper.TABLE_STATUS, null);
+		mCount.moveToFirst();
+		int count= mCount.getInt(0);
+		mCount.close();
+		
+		return count;
 	}
 	
 	private StatusModel cursorToStatus(Cursor cursor) {
