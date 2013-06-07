@@ -62,6 +62,10 @@ public class StatusDataSource {
 	    database.delete(SQLiteStatusHelper.TABLE_STATUS, where, null);
 	}
 	
+	public void deleteLastRows(int numRows) {
+	    database.delete(SQLiteStatusHelper.TABLE_STATUS, SQLiteStatusHelper.COLUMN_ID + " IN (SELECT " + SQLiteStatusHelper.COLUMN_ID + " FROM " + SQLiteStatusHelper.TABLE_STATUS + " ORDER BY " + SQLiteStatusHelper.COLUMN_ID + " LIMIT " + numRows + ")", null);
+	}
+	
 	public void deleteAll() {
 	    delete(null);
 	}

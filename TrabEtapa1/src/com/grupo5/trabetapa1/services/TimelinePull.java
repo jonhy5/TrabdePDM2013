@@ -47,7 +47,7 @@ public class TimelinePull extends IntentService {
 		}
 		toDelete = total - maxListItems;
 		if(toDelete > 0) {
-			datasource.delete(SQLiteStatusHelper.COLUMN_ID + " IN (SELECT " + SQLiteStatusHelper.COLUMN_ID + " FROM " + SQLiteStatusHelper.TABLE_STATUS + " ORDER BY " + SQLiteStatusHelper.COLUMN_ID + " LIMIT " + toDelete + ")");
+			datasource.deleteLastRows(toDelete);
 		}
 		
 		// Notify activity that the TimelinePull is finished
