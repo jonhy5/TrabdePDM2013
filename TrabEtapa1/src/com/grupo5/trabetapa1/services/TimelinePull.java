@@ -9,7 +9,6 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.main.YambApplication;
-import com.grupo5.trabetapa1.sql.SQLiteStatusHelper;
 import com.grupo5.trabetapa1.sql.StatusDataSource;
 
 public class TimelinePull extends IntentService {
