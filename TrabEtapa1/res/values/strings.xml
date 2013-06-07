@@ -41,5 +41,10 @@
     <string name="UserInfo">UsrInfo</string>
     <string name="imageviewdesc">User Image</string>
     <string name="AutoUp">Auto Update</string>
+    <string name="btnloaduserinfo">Load User Info</string>
+    <string name="labeluserinfoname">Name</string>
+    <string name="labeluserinfostatus">Status</string>
+    <string name="labeluserinfofriends">Friends</string>
+    <string name="labeluserinfofollowers">Followers</string>
 
 </resources>

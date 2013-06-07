@@ -16,31 +16,15 @@
         android:src="@drawable/ic_launcher" />
 
     <EditText
-        android:id="@+id/edtStatusCountUserInfo"
-        android:layout_width="wrap_content"
+        android:id="@+id/edtNameUserInfo"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/edtNameUserInfo"
-        android:layout_below="@+id/edtNameUserInfo"
-        android:layout_marginTop="26dp"
-        android:ems="10" />
-
-    <EditText
-        android:id="@+id/edtFriendsCountUserInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/edtStatusCountUserInfo"
-        android:layout_below="@+id/edtStatusCountUserInfo"
-        android:layout_marginTop="34dp"
-        android:ems="10" />
-
-    <EditText
-        android:id="@+id/edtFollowersCountUserInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/edtFriendsCountUserInfo"
-        android:layout_below="@+id/edtFriendsCountUserInfo"
-        android:layout_marginTop="34dp"
-        android:ems="10" />
+        android:layout_alignLeft="@+id/labelUserInfoName"
+        android:layout_below="@+id/labelUserInfoName"
+        android:ems="10"
+        android:focusable="false" 
+        android:focusableInTouchMode="false"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/loaduserinfobutton"
@@ -48,15 +32,81 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:text="Button" />
+        android:text="@string/btnloaduserinfo" />
 
-    <EditText
-        android:id="@+id/edtNameUserInfo"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/labelUserInfoName"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/imageView"
         android:layout_below="@+id/imageView"
-        android:ems="10" />
+        android:layout_marginTop="20dp"
+        android:text="@string/labeluserinfoname"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/labelUserInfoStatus"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_below="@+id/edtNameUserInfo"
+        android:layout_marginTop="20dp"
+        android:text="@string/labeluserinfostatus"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/edtStatusCountUserInfo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/labelUserInfoStatus"
+        android:ems="10"
+        android:focusable="false" 
+        android:focusableInTouchMode="false"
+        android:inputType="text" />
+
+   <TextView
+       android:id="@+id/labelUserInfoFriends"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/edtStatusCountUserInfo"
+       android:layout_below="@+id/edtStatusCountUserInfo"
+       android:layout_marginTop="20dp"
+       android:text="@string/labeluserinfofriends"
+       android:textAppearance="?android:attr/textAppearanceMedium" />
+
+   <EditText
+       android:id="@+id/edtFriendsCountUserInfo"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/labelUserInfoFriends"
+       android:layout_below="@+id/labelUserInfoFriends"
+       android:ems="10"
+       android:focusable="false"
+       android:focusableInTouchMode="false"
+       android:inputType="text" >
+
+       <requestFocus />
+   </EditText>
+
+   <TextView
+       android:id="@+id/labelUserInfoFollowers"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/edtFollowersCountUserInfo"
+       android:layout_below="@+id/edtFriendsCountUserInfo"
+       android:layout_marginTop="20dp"
+       android:text="@string/labeluserinfofollowers"
+       android:textAppearance="?android:attr/textAppearanceMedium" />
+
+   <EditText
+       android:id="@+id/edtFollowersCountUserInfo"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/edtFriendsCountUserInfo"
+       android:layout_below="@+id/labelUserInfoFollowers"
+       android:ems="10"
+       android:focusable="false"
+       android:focusableInTouchMode="false"
+       android:inputType="text" />
 
 </RelativeLayout>

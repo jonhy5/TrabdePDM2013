@@ -34,4 +34,9 @@
     <string name="UserInfo">UsrInfo</string>
     <string name="imageviewdesc">Imagem do Utilizador</string>
     <string name="AutoUp">Actulização Automatica</string>
+    <string name="btnloaduserinfo">Carregar Utilizador</string>
+    <string name="labeluserinfoname">Nome</string>
+    <string name="labeluserinfostatus">Estado</string>
+    <string name="labeluserinfofriends">Amigos</string>
+    <string name="labeluserinfofollowers">Seguidores</string>
 </resources>
