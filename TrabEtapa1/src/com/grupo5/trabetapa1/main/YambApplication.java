@@ -1,3 +1,6 @@
+/**
+ * Main Yamb5 application
+ */
 package com.grupo5.trabetapa1.main;
 
 import winterwell.jtwitter.Twitter;
@@ -12,6 +15,7 @@ import android.util.Log;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.services.TimelinePull;
+import com.grupo5.trabetapa1.utils.Connectivity;
 
 @SuppressLint("HandlerLeak")
 public class YambApplication extends Application implements OnSharedPreferenceChangeListener  {
@@ -41,6 +45,11 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		}
 	}
 	
+	/**
+	 * Retorna o objecto Twitter com as informações das preferencias
+	 * 
+	 * @return Twitter object
+	 */
 	public synchronized Twitter getTwitter() {
 		if(twitter == null) {
 			String username = prefs.getString(PreferencesActivity.USERNAMEKEY, "student");
@@ -49,19 +58,32 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			twitter = new Twitter(username, password);
 			twitter.setAPIRootUrl(url);
 		}
-		return this.twitter;
+		return twitter;
 	}
-			
+		
+	/**
+	 * Se existir conectividade Wifi arranca o serviço de actualização da timeline
+	 */
 	private void startRepeatTimelinePull() {
-		AlarmManager mng = (AlarmManager)getSystemService(ALARM_SERVICE);
-		Intent timepull = new Intent(this, TimelinePull.class);
-		timepull.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
-		timepull.putExtra(PreferencesActivity.MAXMSGKEY, Integer.parseInt(prefs.getString(PreferencesActivity.MAXMSGKEY, "20")));
-		intentPull = PendingIntent.getService(this, 1, timepull, PendingIntent.FLAG_CANCEL_CURRENT);
-		// Start 30 seconds after application boot and repeat every 5 minutes
-		mng.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + 30000, 3000, intentPull);
+		if(Connectivity.isConnectedWifi(getApplicationContext())) {
+			System.out.println("ARRANCOU.....");
+			
+			
+			AlarmManager mng = (AlarmManager)getSystemService(ALARM_SERVICE);
+			Intent timepull = new Intent(this, TimelinePull.class);
+			timepull.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
+			timepull.putExtra(PreferencesActivity.MAXMSGKEY, Integer.parseInt(prefs.getString(PreferencesActivity.MAXMSGKEY, "20")));
+			intentPull = PendingIntent.getService(this, 1, timepull, PendingIntent.FLAG_CANCEL_CURRENT);
+			// Arranca ao fim de 30 segundos e repete a cada minuto
+			mng.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + 30000, 60000, intentPull);
+		} else {
+			System.out.println("OOOOPS NAO ARRANCOU.....");
+		}
 	}
 	
+	/**
+	 * Callback para mudança nas preferencias
+	 */
 	@Override
 	public synchronized void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		// If preferences changes set twitter to null to create a new instance with the new values
@@ -75,7 +97,7 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			// Arrancar/Parar o servico de actualizacao da timeline
 			if(sharedPreferences.getBoolean(PreferencesActivity.AUTOUP, true)) {
 				startRepeatTimelinePull();
-			} else {				
+			} else {
 				mng.cancel(intentPull);
 			}
 		}
