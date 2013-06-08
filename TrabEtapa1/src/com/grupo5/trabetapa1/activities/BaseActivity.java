@@ -18,7 +18,7 @@ public class BaseActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.base, menu);
+		getMenuInflater().inflate(R.menu.actionbar_menu, menu);
 		return true;
 	}
 	
@@ -40,6 +40,7 @@ public class BaseActivity extends Activity {
 				inten = new Intent(this,PreferencesActivity.class);
 				startActivity(inten);
 				return true;
+
 			case R.id.InfoUser:
 				inten = new Intent(this,UserInfoActivity.class);
 				startActivity(inten);

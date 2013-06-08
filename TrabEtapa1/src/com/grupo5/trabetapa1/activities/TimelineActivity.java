@@ -11,8 +11,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -123,17 +121,6 @@ public class TimelineActivity extends BaseActivity {
 		((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownloading);	    
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.actionbar_menu, menu);
-		return true;
-	}
-	
-	public boolean onOptionsItemSelected(MenuItem item){
-		Log.d(ACTIVITY_SERVICE, "onItemSelected");
-		return super.onOptionsItemSelected(item);
-	}
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putString(TIMELINESTATUSKEY, Boolean.toString(_statusDownloading));

@@ -1,6 +1,5 @@
 package com.grupo5.trabetapa1.activities;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -9,7 +8,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,7 +18,7 @@ import com.grupo5.trabetapa1.parcelable.UserInfo;
 import com.grupo5.trabetapa1.services.IRemoteBoundService;
 import com.grupo5.trabetapa1.services.UserInfoReceiver;
 
-public class UserInfoActivity extends Activity {
+public class UserInfoActivity extends BaseActivity {
 	
 	ImageView image;
 	private IRemoteBoundService _remoteServive;
@@ -100,12 +98,5 @@ public class UserInfoActivity extends Activity {
 			unbindService(_connection);
 			_isBounded = false;
 		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.user_info, menu);
-		return true;
 	}
 }
