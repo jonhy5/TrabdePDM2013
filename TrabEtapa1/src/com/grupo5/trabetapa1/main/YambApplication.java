@@ -12,26 +12,35 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
+import com.grupo5.trabetapa1.services.StatusUpload;
 import com.grupo5.trabetapa1.services.TimelinePull;
 import com.grupo5.trabetapa1.utils.Connectivity;
 
 @SuppressLint("HandlerLeak")
 public class YambApplication extends Application implements OnSharedPreferenceChangeListener  {
-	public static final String EXTRA_MESSENGER = "TimeLineMessenger";
-	
+	public static final String EXTRA_MESSENGER = "TimeLineMessenger";	
 	private static final String TAG = YambApplication.class.getSimpleName();
+
+	private boolean isNetworkAvailable;
+	private boolean isTimelinePullRunning;
+	
 	private SharedPreferences prefs;
 	// Singleton Class twitter;
 	private Twitter twitter;
 	
 	public static final String preferencesFileName = "ClientPrefs";
 	private PendingIntent intentPull;
-		
+	
 	public void onCreate() {
 		super.onCreate();
 		Log.i(TAG, "onCreate");
+		
+		isNetworkAvailable = Connectivity.isConnected(getApplicationContext());
+		isTimelinePullRunning = false;
+		
 		prefs = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
 		prefs.registerOnSharedPreferenceChangeListener(this);
 		
@@ -62,13 +71,10 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 	}
 		
 	/**
-	 * Se existir conectividade Wifi arranca o serviço de actualização da timeline
+	 * Se existir conectividade rede arranca o serviço de actualização periodica da timeline
 	 */
 	private void startRepeatTimelinePull() {
-		if(Connectivity.isConnectedWifi(getApplicationContext())) {
-			System.out.println("ARRANCOU.....");
-			
-			
+		if(isNetworkAvailable && !isTimelinePullRunning) {
 			AlarmManager mng = (AlarmManager)getSystemService(ALARM_SERVICE);
 			Intent timepull = new Intent(this, TimelinePull.class);
 			timepull.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
@@ -76,8 +82,18 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			intentPull = PendingIntent.getService(this, 1, timepull, PendingIntent.FLAG_CANCEL_CURRENT);
 			// Arranca ao fim de 30 segundos e repete a cada minuto
 			mng.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + 30000, 60000, intentPull);
-		} else {
-			System.out.println("OOOOPS NAO ARRANCOU.....");
+			isTimelinePullRunning = true;
+		}
+	}
+	
+	/**
+	 * Para o serviço de actualização periodica da timeline se estiver a correr
+	 */
+	private void stopRepeatTimelinePull() {
+		if(isTimelinePullRunning) {
+			AlarmManager mng = (AlarmManager)getSystemService(ALARM_SERVICE);
+			isTimelinePullRunning = false;
+			mng.cancel(intentPull);
 		}
 	}
 	
@@ -93,13 +109,37 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			twitter = null;
 		}
 		if(key.equals(PreferencesActivity.AUTOUP)) {
-			AlarmManager mng = (AlarmManager)getSystemService(ALARM_SERVICE);
 			// Arrancar/Parar o servico de actualizacao da timeline
 			if(sharedPreferences.getBoolean(PreferencesActivity.AUTOUP, true)) {
 				startRepeatTimelinePull();
 			} else {
-				mng.cancel(intentPull);
+				stopRepeatTimelinePull();
 			}
+		}
+	}
+
+	/**
+	 * Retorna se existe rede disponivel
+	 * 
+	 * @return boolean 
+	 */
+	public synchronized boolean isNetworkAvailable() {
+		return isNetworkAvailable;
+	}
+
+	/**
+	 * Atribui se existe rede disponivel
+	 * 
+	 * @param is_network_available
+	 */
+	public synchronized void setNetworkAvailable(boolean isNetworkAvailable) {
+		this.isNetworkAvailable = isNetworkAvailable;
+		if(isNetworkAvailable) {
+			Toast.makeText(getApplicationContext(), "ONLINE", Toast.LENGTH_LONG).show();
+			startRepeatTimelinePull();
+		} else {
+			Toast.makeText(getApplicationContext(), "OFFLINE", Toast.LENGTH_LONG).show();
+			stopRepeatTimelinePull();
 		}
 	}
 }
