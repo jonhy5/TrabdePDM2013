@@ -15,7 +15,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
-import com.grupo5.trabetapa1.services.StatusUpload;
 import com.grupo5.trabetapa1.services.TimelinePull;
 import com.grupo5.trabetapa1.utils.Connectivity;
 

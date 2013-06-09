@@ -39,4 +39,5 @@
     <string name="labeluserinfostatus">Estado</string>
     <string name="labeluserinfofriends">Amigos</string>
     <string name="labeluserinfofollowers">Seguidores</string>
+    <string name="nonetworkmessage">Sem rede disponível.</string>
 </resources>

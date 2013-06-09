@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.main.YambApplication;
@@ -73,14 +74,18 @@ public class TimelineActivity extends BaseActivity {
 		((Button)findViewById(R.id.Btn_refresh)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				_statusDownloading = true;
-				((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownloading);
-
-				Intent intent = new Intent(TimelineActivity.this, TimelinePull.class);
-				SharedPreferences prefs = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
-				intent.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
-				intent.putExtra(PreferencesActivity.MAXMSGKEY, Integer.parseInt(prefs.getString(PreferencesActivity.MAXMSGKEY, "20")));
-				startService(intent);
+				if(((YambApplication)getApplication()).isNetworkAvailable()) {
+					_statusDownloading = true;
+					((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownloading);
+	
+					Intent intent = new Intent(TimelineActivity.this, TimelinePull.class);
+					SharedPreferences prefs = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
+					intent.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
+					intent.putExtra(PreferencesActivity.MAXMSGKEY, Integer.parseInt(prefs.getString(PreferencesActivity.MAXMSGKEY, "20")));
+					startService(intent);
+				} else {
+					Toast.makeText(TimelineActivity.this, getResources().getString(R.string.nonetworkmessage), Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}

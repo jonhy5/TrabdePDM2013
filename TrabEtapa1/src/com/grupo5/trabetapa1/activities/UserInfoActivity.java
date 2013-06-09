@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.grupo5.trabetapa1.R;
+import com.grupo5.trabetapa1.main.YambApplication;
 import com.grupo5.trabetapa1.parcelable.UserInfo;
 import com.grupo5.trabetapa1.services.IRemoteBoundService;
 import com.grupo5.trabetapa1.services.UserInfoReceiver;
@@ -45,7 +47,6 @@ public class UserInfoActivity extends BaseActivity {
 					});
 				}
 			};
-
 			try {
 				_remoteServive.setCallback(callback);
 			} catch (RemoteException e) {
@@ -81,8 +82,11 @@ public class UserInfoActivity extends BaseActivity {
 			public void onClick(View v) {
 				Log.w("UI", "onClick");
 				try {
-					_remoteServive.getStatus();
-					
+					if(((YambApplication)getApplication()).isNetworkAvailable()) {
+						_remoteServive.getStatus();
+					} else {
+						Toast.makeText(UserInfoActivity.this, getResources().getString(R.string.nonetworkmessage), Toast.LENGTH_SHORT).show();
+					}
 				} catch (RemoteException e) {
 					e.printStackTrace();
 				}
