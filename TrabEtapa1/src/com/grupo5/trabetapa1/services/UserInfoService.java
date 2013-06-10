@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -21,13 +20,13 @@ import com.grupo5.trabetapa1.parcelable.UserInfo;
 
 public class UserInfoService extends Service {
 	private static final String TAG = "UserInfoService";
-	private UserInfoReceiver _userInfoReceiver;
+	public static final String USERINFO_ACTION = "userinfopull";
+	public static final String USERINFO_EXTRA = "userinfoparcelable";
 	
 	@Override
 	public void onCreate() {
 		Log.d(TAG, "onCreate()");
 		super.onCreate();
-		_userInfoReceiver = null;
 	}
 	
 	@Override
@@ -67,23 +66,10 @@ public class UserInfoService extends Service {
 				}						
 				info = new UserInfo(name, statusCount, friendsCount, followersCount, image, bitmap);
 
-				if(_userInfoReceiver != null) {
-					try {
-						_userInfoReceiver.UserInfoReceiver(info);
-					} catch (RemoteException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			
-			@Override
-			public void setCallback(UserInfoReceiver callback) {
-				_userInfoReceiver = callback;
-			}
-			
-			@Override
-			public void unsetCallback() {
-				_userInfoReceiver = null;
+				// Notificar actividades interessadas que UserInfoService terminou
+				Intent broadIntent = new Intent(USERINFO_ACTION);
+				broadIntent.putExtra(USERINFO_EXTRA, info);
+				sendBroadcast(broadIntent);
 			}
 		};
 	}

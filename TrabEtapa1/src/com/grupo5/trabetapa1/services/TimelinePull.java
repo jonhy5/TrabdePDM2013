@@ -49,7 +49,7 @@ public class TimelinePull extends IntentService {
 			datasource.deleteLastRows(toDelete);
 		}
 		
-		// Notify activity that the TimelinePull is finished
+		// Notificar actividades interessadas que TimelinePull terminou
 		Intent broadIntent = new Intent(TIMELINEPULL_ACTION);
 		broadIntent.putExtra(NEWROWS_EXTRA, toDelete);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(broadIntent);
