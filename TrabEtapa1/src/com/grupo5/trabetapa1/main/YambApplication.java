@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.services.TimelinePull;
@@ -23,7 +22,7 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 	public static final String EXTRA_MESSENGER = "TimeLineMessenger";	
 	private static final String TAG = YambApplication.class.getSimpleName();
 
-	private boolean isNetworkAvailable;
+	private boolean isMobileNetworkAvailable, isWifiNetworkAvailable;
 	private boolean isTimelinePullRunning;
 	
 	private SharedPreferences prefs;
@@ -37,7 +36,8 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		super.onCreate();
 		Log.i(TAG, "onCreate");
 		
-		isNetworkAvailable = Connectivity.isConnected(getApplicationContext());
+		isWifiNetworkAvailable = Connectivity.isConnectedWifi(getApplicationContext());
+		isMobileNetworkAvailable = Connectivity.isConnectedMobile(getApplicationContext());
 		isTimelinePullRunning = false;
 		
 		prefs = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
@@ -73,7 +73,7 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 	 * Se existir conectividade rede arranca o serviço de actualização periodica da timeline
 	 */
 	private void startRepeatTimelinePull() {
-		if(isNetworkAvailable && !isTimelinePullRunning) {
+		if(isMobileNetworkAvailable && !isTimelinePullRunning) {
 			AlarmManager mng = (AlarmManager)getSystemService(ALARM_SERVICE);
 			Intent timepull = new Intent(this, TimelinePull.class);
 			timepull.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
@@ -118,26 +118,44 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 	}
 
 	/**
-	 * Retorna se existe rede disponivel
+	 * Retorna se existe alguma rede disponivel
 	 * 
 	 * @return boolean 
 	 */
 	public synchronized boolean isNetworkAvailable() {
-		return isNetworkAvailable;
+		return isMobileNetworkAvailable || isWifiNetworkAvailable;
+	}
+	
+	/**
+	 * Retorna se existe rede movel disponivel
+	 * 
+	 * @return boolean 
+	 */
+	public synchronized boolean isMobileNetworkAvailable() {
+		return isMobileNetworkAvailable;
+	}
+	
+	/**
+	 * Retorna se existe rede Wifi disponivel
+	 * 
+	 * @return boolean 
+	 */
+	public synchronized boolean isWifiNetworkAvailable() {
+		return isWifiNetworkAvailable;
 	}
 
 	/**
-	 * Atribui se existe rede disponivel
+	 * Atribui se existe rede movel e wifi disponivel
 	 * 
 	 * @param is_network_available
 	 */
-	public synchronized void setNetworkAvailable(boolean isNetworkAvailable) {
-		this.isNetworkAvailable = isNetworkAvailable;
-		if(isNetworkAvailable) {
-			Toast.makeText(getApplicationContext(), "ONLINE", Toast.LENGTH_LONG).show();
+	public synchronized void setNetworkAvailability(boolean isMobileNetworkAvailable, boolean isWifiNetworkAvailable) {
+		this.isMobileNetworkAvailable = isMobileNetworkAvailable;
+		this.isWifiNetworkAvailable = isWifiNetworkAvailable;
+		// Arranca o servico de Timepull se Wifi estiver disponivel ou para-o caso contrario
+		if(isWifiNetworkAvailable) {
 			startRepeatTimelinePull();
 		} else {
-			Toast.makeText(getApplicationContext(), "OFFLINE", Toast.LENGTH_LONG).show();
 			stopRepeatTimelinePull();
 		}
 	}
