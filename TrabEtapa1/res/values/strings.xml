@@ -34,7 +34,6 @@
     <string name="timeline_Minutes">Minutes</string>
     <string name="timeline_Seconds">Seconds</string>
     <string name="timeline_Days">Days</string>
-    <string name="OK"></string>
     <string name="btnOK">OK</string>
     <string name="Refresh_Button">Refresh</string>
     <string name="title_activity_user_info">UserInfoActivity</string>
@@ -47,4 +46,12 @@
     <string name="labeluserinfofriends">Friends</string>
     <string name="labeluserinfofollowers">Followers</string>
 	<string name="nonetworkmessage">No network connectivity available.</string>
+	<string name="labeldetailid">ID:</string>
+	<string name="labeldetailauthor">Author:</string>
+	<string name="labeldetailmsg">Message:</string>
+	<string name="labeldetaildate">Date:</string>
+	<string name="btnBack">Back</string>
+	<string name="bntEmail">Share by Email</string>
+	<string name="noemailclient">There are no email clients installed.</string>
+	<string name="shareemailsubject">Share Yamba Status</string>
 </resources>

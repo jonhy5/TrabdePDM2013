@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout1"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -10,46 +10,107 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".DetailedActivity" >
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Detail" 
-        android:editable="false"/>
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin" >
 
-    <TextView
-        android:id="@+id/textIdSeq"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" 
-        android:editable="false"/>
+        <TextView
+            android:id="@+id/labelTextViewID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="@string/labeldetailid"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textAutor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" 
-        android:editable="false"/>
+        <TextView
+            android:id="@+id/textIdSeq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/txtMsg"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" 
-        android:editable="false"/>
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin" >
 
-    <TextView
-        android:id="@+id/textDt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" 
-        android:editable="false"/>
+        <TextView
+            android:id="@+id/labelTextViewAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="@string/labeldetailauthor"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/buttonFinish"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textAutor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true" />
+
+    </LinearLayout>
+	
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="@string/btnOK" />
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin" >
+        
+        <TextView
+            android:id="@+id/labelTextViewMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="@string/labeldetailmsg"
+            android:textStyle="bold" />
+        
+	    <TextView
+	        android:id="@+id/txtMsg"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textIsSelectable="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin" >
+	    
+        <TextView
+            android:id="@+id/labelTextViewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="@string/labeldetaildate"
+            android:textStyle="bold" />
+        
+	    <TextView
+	        android:id="@+id/textDt"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" 
+	        android:textIsSelectable="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/buttonEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bntEmail" />
+
+        <Button
+            android:id="@+id/buttonFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnBack" />
+
+    </LinearLayout>
 
 </LinearLayout>

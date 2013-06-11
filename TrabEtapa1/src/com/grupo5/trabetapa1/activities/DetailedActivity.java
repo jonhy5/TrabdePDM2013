@@ -1,18 +1,19 @@
 package com.grupo5.trabetapa1.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.parcelable.DetailData;
 
 public class DetailedActivity extends Activity {
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,29 +21,30 @@ public class DetailedActivity extends Activity {
 		setContentView(R.layout.activity_detailed);
 		
 		Bundle bundle = getIntent().getExtras();
-		DetailData d =  (DetailData)bundle.getParcelable("detail");
+		final DetailData detailData =  (DetailData)bundle.getParcelable("detail");
 		
-		
-		TextView txtid =(TextView) findViewById(R.id.textIdSeq);
-		txtid.setText(d.getId());
-		
-		TextView txtautor =(TextView) findViewById(R.id.textAutor);
-		txtautor.setText(d.getAutor());
-		
-		TextView txtmsg =(TextView) findViewById(R.id.txtMsg);
-		txtmsg.setText(d.getMsg());
-		
-		TextView txtDt =(TextView) findViewById(R.id.textDt);
-		txtDt.setText(d.getDate());
-		
-		Button btn = (Button) findViewById(R.id.buttonFinish);
-		
-		btn.setOnClickListener(new View.OnClickListener() {
-			
+		((TextView) findViewById(R.id.textIdSeq)).setText(detailData.getId());
+		((TextView) findViewById(R.id.textAutor)).setText(detailData.getAutor());
+		((TextView) findViewById(R.id.txtMsg)).setText(detailData.getMsg());
+		((TextView) findViewById(R.id.textDt)).setText(detailData.getDate());
+		((Button) findViewById(R.id.buttonFinish)).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
-				
+			}
+		});
+		((Button) findViewById(R.id.buttonEmail)).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(Intent.ACTION_SEND);
+				i.setType("message/rfc822");
+				i.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.shareemailsubject));
+				i.putExtra(Intent.EXTRA_TEXT   , detailData.getMsg());
+				try {
+				    startActivity(Intent.createChooser(i, getResources().getString(R.string.bntEmail) + "..."));
+				} catch (android.content.ActivityNotFoundException ex) {
+				    Toast.makeText(DetailedActivity.this, getResources().getString(R.string.noemailclient), Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}

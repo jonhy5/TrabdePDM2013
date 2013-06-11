@@ -40,4 +40,12 @@
     <string name="labeluserinfofriends">Amigos</string>
     <string name="labeluserinfofollowers">Seguidores</string>
     <string name="nonetworkmessage">Sem rede disponível.</string>
+    <string name="labeldetailid">ID:</string>
+    <string name="labeldetailauthor">Autor:</string>
+    <string name="labeldetailmsg">Mensagem:</string>
+	<string name="labeldetaildate">Data:</string>
+	<string name="btnBack">Voltar</string>
+	<string name="bntEmail">Partilhar por Email</string>
+	<string name="noemailclient">Não existem clientes de email instalados.</string>
+	<string name="shareemailsubject">Partilha de mensagem Yamba</string>
 </resources>
