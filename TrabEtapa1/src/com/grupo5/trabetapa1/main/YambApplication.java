@@ -14,6 +14,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.util.Log;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
+import com.grupo5.trabetapa1.services.StatusUpload;
 import com.grupo5.trabetapa1.services.TimelinePull;
 import com.grupo5.trabetapa1.utils.Connectivity;
 
@@ -50,6 +51,7 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		}
 		if(prefs.getBoolean(PreferencesActivity.AUTOUP, true)) {
 			startRepeatTimelinePull();
+			emptyStatusqueue();
 		}
 	}
 	
@@ -73,7 +75,7 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 	 * Se existir conectividade rede arranca o serviço de actualização periodica da timeline
 	 */
 	private void startRepeatTimelinePull() {
-		if(isMobileNetworkAvailable && !isTimelinePullRunning) {
+		if(isWifiNetworkAvailable && !isTimelinePullRunning) {
 			AlarmManager mng = (AlarmManager)getSystemService(ALARM_SERVICE);
 			Intent timepull = new Intent(this, TimelinePull.class);
 			timepull.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
@@ -96,6 +98,14 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		}
 	}
 	
+	/**
+	 * 
+	 */
+	private void emptyStatusqueue() {
+		Intent intent = new Intent(this, StatusUpload.class);
+		intent.setAction(StatusUpload.EMPTYQUEUE_ACTION);
+		startService(intent);
+	}
 	/**
 	 * Callback para mudança nas preferencias
 	 */
@@ -150,6 +160,10 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 	 * @param is_network_available
 	 */
 	public synchronized void setNetworkAvailability(boolean isMobileNetworkAvailable, boolean isWifiNetworkAvailable) {
+		// Se estamos offline e passamos a ter rede enviamos os status em queue
+		if((!this.isMobileNetworkAvailable && !this.isWifiNetworkAvailable) && (isMobileNetworkAvailable || isWifiNetworkAvailable)) {
+			emptyStatusqueue();
+		}
 		this.isMobileNetworkAvailable = isMobileNetworkAvailable;
 		this.isWifiNetworkAvailable = isWifiNetworkAvailable;
 		// Arranca o servico de Timepull se Wifi estiver disponivel ou para-o caso contrario

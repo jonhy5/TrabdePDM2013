@@ -48,4 +48,7 @@
 	<string name="bntEmail">Partilhar por Email</string>
 	<string name="noemailclient">Não existem clientes de email instalados.</string>
 	<string name="shareemailsubject">Partilha de mensagem Yamba</string>
+	<string name="statusnotificationtitle">Yamba 5 estado.</string>
+	<string name="statusnotificationqueuetext">%d mensagens de estado gravadas para envio.</string>
+	<string name="statusnotificationsenttext">%d mensagens de estado gravadas foram enviadas.</string>
 </resources>

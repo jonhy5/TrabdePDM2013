@@ -83,7 +83,7 @@ public class MessageStatusDataSource {
 	public int rowCount() {
 		Cursor mCount = database.rawQuery("select count(*) from " + SQLiteMessageStatusHelper.TABLE_MESSAGESTATUS, null);
 		mCount.moveToFirst();
-		int count= mCount.getInt(0);
+		int count = mCount.getInt(0);
 		mCount.close();
 		
 		return count;

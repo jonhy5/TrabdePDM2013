@@ -57,8 +57,8 @@ public class StatusActivity extends BaseActivity {
 		submitButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Log.i(TAG, "Submit button clicked");				
 				Intent intent = new Intent(StatusActivity.this, StatusUpload.class);
+				intent.setAction(StatusUpload.SUBMIT_ACTION);
 				intent.putExtra(StatusUpload.EXTRA_KEY, ((EditText) findViewById(R.id.statusEditText)).getText().toString());
 				startService(intent);
 			}

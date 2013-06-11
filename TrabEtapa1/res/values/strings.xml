@@ -54,4 +54,7 @@
 	<string name="bntEmail">Share by Email</string>
 	<string name="noemailclient">There are no email clients installed.</string>
 	<string name="shareemailsubject">Share Yamba Status</string>
+	<string name="statusnotificationtitle">Yamba 5 Status.</string>
+	<string name="statusnotificationqueuetext">%d status messages saved in queue.</string>
+	<string name="statusnotificationsenttext">%d status messages sent from queue.</string>
 </resources>

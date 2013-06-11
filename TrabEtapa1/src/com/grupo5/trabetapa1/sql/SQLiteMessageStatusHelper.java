@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class SQLiteMessageStatusHelper extends SQLiteOpenHelper {
-	private static final String DATABASE_NAME = "yamb5.db";
+	private static final String DATABASE_NAME = "messagestatus.db";
 	private static final int DATABASE_VERSION = 1;
 	public static final String TABLE_MESSAGESTATUS = "messagestatus";
 	
@@ -17,7 +17,7 @@ public class SQLiteMessageStatusHelper extends SQLiteOpenHelper {
 	// Database creation SQLlite statement
 	private static final String DATABASE_CREATE = 
 		"CREATE TABLE " + TABLE_MESSAGESTATUS + "(" + 
-			COLUMN_ID + " integer primary key AUTOINCREMENT NOT NULL, " +
+			COLUMN_ID + " integer primary key autoincrement, " +
 			COLUMN_MESSAGE + " text not null);";
 	  
 	public SQLiteMessageStatusHelper(Context context) {

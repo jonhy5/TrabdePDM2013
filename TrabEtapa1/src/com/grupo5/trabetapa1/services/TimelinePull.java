@@ -6,6 +6,7 @@ import winterwell.jtwitter.Twitter.Status;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.main.YambApplication;
@@ -32,9 +33,8 @@ public class TimelinePull extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		int maxListItems, toDelete;
-		String user;
 		
-		user = intent.getStringExtra(PreferencesActivity.USERNAMEKEY);
+		String user = intent.getStringExtra(PreferencesActivity.USERNAMEKEY);
 		maxListItems = intent.getIntExtra(PreferencesActivity.MAXMSGKEY, 0);
 
 		List<Status> statusList = aplication.getTwitter().getUserTimeline(user);
@@ -53,6 +53,8 @@ public class TimelinePull extends IntentService {
 		Intent broadIntent = new Intent(TIMELINEPULL_ACTION);
 		broadIntent.putExtra(NEWROWS_EXTRA, toDelete);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(broadIntent);
+		
+		Log.v("OnHandleIntent", "Timeline: " + toDelete);
 	}
 	
 	@Override
