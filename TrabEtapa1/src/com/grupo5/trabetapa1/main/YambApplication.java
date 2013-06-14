@@ -51,6 +51,8 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 		}
 		if(prefs.getBoolean(PreferencesActivity.AUTOUP, true)) {
 			startRepeatTimelinePull();
+		}
+		if(isNetworkAvailable()) {
 			emptyStatusqueue();
 		}
 	}
@@ -80,6 +82,7 @@ public class YambApplication extends Application implements OnSharedPreferenceCh
 			Intent timepull = new Intent(this, TimelinePull.class);
 			timepull.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
 			timepull.putExtra(PreferencesActivity.MAXMSGKEY, Integer.parseInt(prefs.getString(PreferencesActivity.MAXMSGKEY, "20")));
+			timepull.setAction(TimelinePull.TIMELINEPULL_ACTION);
 			intentPull = PendingIntent.getService(this, 1, timepull, PendingIntent.FLAG_CANCEL_CURRENT);
 			// Arranca ao fim de 30 segundos e repete a cada minuto
 			mng.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis() + 30000, 60000, intentPull);

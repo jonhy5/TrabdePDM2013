@@ -3,6 +3,7 @@ package com.grupo5.trabetapa1.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -82,6 +83,7 @@ public class TimelineActivity extends BaseActivity {
 					SharedPreferences prefs = getSharedPreferences(YambApplication.preferencesFileName, MODE_PRIVATE);
 					intent.putExtra(PreferencesActivity.USERNAMEKEY, prefs.getString(PreferencesActivity.USERNAMEKEY, "student"));
 					intent.putExtra(PreferencesActivity.MAXMSGKEY, Integer.parseInt(prefs.getString(PreferencesActivity.MAXMSGKEY, "20")));
+					intent.setAction(TimelinePull.TIMELINEPULL_ACTION);
 					startService(intent);
 				} else {
 					Toast.makeText(TimelineActivity.this, getResources().getString(R.string.nonetworkmessage), Toast.LENGTH_SHORT).show();
@@ -121,7 +123,13 @@ public class TimelineActivity extends BaseActivity {
 		adapter.notifyDataSetChanged();
 
 		_statusDownloading = false;
-		((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownloading);	    
+		((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownloading);
+		
+		// Cancelar notificacao se existir e voltar a 0 o contador de mensagens nao lidas
+    	((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).cancel(TimelinePull.STATUSBAR_ID);
+    	Intent intentTime = new Intent(TimelineActivity.this, TimelinePull.class);
+    	intentTime.setAction(TimelinePull.TIMELINEREAD_ACTION);
+		startService(intentTime);
 	}
 	
 	@Override

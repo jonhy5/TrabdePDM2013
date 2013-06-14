@@ -57,4 +57,6 @@
 	<string name="statusnotificationtitle">Yamba 5 Status.</string>
 	<string name="statusnotificationqueuetext">%d status messages saved in queue.</string>
 	<string name="statusnotificationsenttext">%d status messages sent from queue.</string>
+	<string name="timelinenotificationtitle">Yamba 5 Timeline.</string>
+	<string name="timelinenotificationtext">%d new messages in timeline.</string>
 </resources>
