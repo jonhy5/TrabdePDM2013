@@ -48,6 +48,8 @@ public class TimelinePull extends IntentService {
 		if(toDelete > 0) {
 			datasource.deleteLastRows(toDelete);
 		}
+		// Criar uma notificao com as mensagens nao lidas
+		// TODO
 		
 		// Notificar actividades interessadas que TimelinePull terminou
 		Intent broadIntent = new Intent(TIMELINEPULL_ACTION);

@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -91,6 +92,8 @@ public class StatusUpload extends IntentService {
 	 * @param msgNot
 	 */
 	private void sendNotification(String msgNot) {
+		PendingIntent pending = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0);
+		
 		Notification notification = new Notification.Builder(this)
 			.setSmallIcon(R.drawable.ic_launcher)
 			.setContentTitle(getResources().getString(R.string.statusnotificationtitle))
@@ -98,6 +101,7 @@ public class StatusUpload extends IntentService {
 			.setAutoCancel(true)
 			.setWhen(System.currentTimeMillis()).build();
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+		notification.contentIntent = pending;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.notify(STATUSBAR_ID, notification);
 	}

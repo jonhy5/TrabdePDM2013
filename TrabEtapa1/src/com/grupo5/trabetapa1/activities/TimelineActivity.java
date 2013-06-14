@@ -112,16 +112,14 @@ public class TimelineActivity extends BaseActivity {
 
 	// Update gridView
 	private void updateGridView(int rows) {
-		// Se existirem novas rows, actualizar gridView
-    	if(rows > 0) {
-	    	List<StatusModel> list = datasource.getAllStatus();
-			
-			GridView gridView = (GridView) findViewById(R.id.timelineGridView);
-			TimelineAdapter adapter = (TimelineAdapter)gridView.getAdapter();
-			adapter.clear();
-			adapter.addAll(list);
-			adapter.notifyDataSetChanged();
-    	}
+    	List<StatusModel> list = datasource.getAllStatus();
+		
+		GridView gridView = (GridView) findViewById(R.id.timelineGridView);
+		TimelineAdapter adapter = (TimelineAdapter)gridView.getAdapter();
+		adapter.clear();
+		adapter.addAll(list);
+		adapter.notifyDataSetChanged();
+
 		_statusDownloading = false;
 		((Button)findViewById(R.id.Btn_refresh)).setEnabled(!_statusDownloading);	    
 	}
