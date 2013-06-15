@@ -46,6 +46,7 @@
             <meta-data android:name="android.appwidget.provider" 
                 android:resource="@xml/widget_metadata"/>
         </receiver>
+        <service android:name="com.grupo5.trabetapa1.appwidget.UpdateWidgetService"></service> 
         <activity
             android:name="com.grupo5.trabetapa1.activities.TimelineActivity">
             <intent-filter>
