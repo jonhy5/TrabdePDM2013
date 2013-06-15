@@ -36,6 +36,16 @@
 		        <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
 		    </intent-filter>
 		</receiver>
+		<receiver
+			android:icon="@drawable/ic_launcher"
+			android:label="@string/app_name"
+			android:name="com.grupo5.trabetapa1.appwidget.TimelineWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" 
+                android:resource="@xml/widget_metadata"/>
+        </receiver>
         <activity
             android:name="com.grupo5.trabetapa1.activities.TimelineActivity">
             <intent-filter>

@@ -53,4 +53,5 @@
 	<string name="statusnotificationsenttext">%d mensagens de estado gravadas foram enviadas.</string>
 	<string name="timelinenotificationtitle">Yamba 5 Cronograma.</string>
 	<string name="timelinenotificationtext">%d novas mensagens adicionadas ao Cronograma.</string>
+	<string name="latest_status">Yamba 5 - Última mensagem</string>
 </resources>
