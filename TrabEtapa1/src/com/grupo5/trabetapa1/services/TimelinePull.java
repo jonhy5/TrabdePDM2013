@@ -7,16 +7,19 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.grupo5.trabetapa1.R;
 import com.grupo5.trabetapa1.activities.PreferencesActivity;
 import com.grupo5.trabetapa1.activities.TimelineActivity;
+import com.grupo5.trabetapa1.contentprovider.StatusProvider;
 import com.grupo5.trabetapa1.main.YambApplication;
-import com.grupo5.trabetapa1.sql.StatusDataSource;
 
 public class TimelinePull extends IntentService {
 	public static int STATUSBAR_ID = 2;
@@ -24,7 +27,6 @@ public class TimelinePull extends IntentService {
 	public static final String TIMELINEREAD_ACTION = "timelineread";
 	public static final String NEWROWS_EXTRA = "newrows";
 	private YambApplication aplication;
-	private StatusDataSource datasource;
 	private static int newMessages = 0;
 	
 	public TimelinePull() {
@@ -35,29 +37,41 @@ public class TimelinePull extends IntentService {
 	public void onCreate() {
 		super.onCreate();
 		aplication = (YambApplication) getApplication();
-		datasource = new StatusDataSource(this);
-	    datasource.open();
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		if(intent.getAction().equals(TIMELINEPULL_ACTION)) {
 			int maxListItems, toDelete;
-			
+
 			String user = intent.getStringExtra(PreferencesActivity.USERNAMEKEY);
 			maxListItems = intent.getIntExtra(PreferencesActivity.MAXMSGKEY, 0);
 	
 			List<Status> statusList = aplication.getTwitter().getUserTimeline(user);
-			int total = datasource.rowCount();
+			Cursor countCursor = getContentResolver().query(StatusProvider.CONTENT_URI,
+	                new String[] {"count(*) AS count"}, null, null, null);
+	        countCursor.moveToFirst();
+	        int total = countCursor.getInt(0);
+			
+			// Inserir na tabela
 			for(Status st: statusList) {
-				if(datasource.createStatus(st.getId(), st.getText(), st.getUser().getName(), st.getCreatedAt().getTime()) != null) {
-					total++;
+				ContentValues values = new ContentValues();
+				values.put(StatusProvider.KEY_ID, st.getId());
+				values.put(StatusProvider.KEY_MESSAGE, st.getText());
+				values.put(StatusProvider.KEY_USER, st.getUser().getName());
+				values.put(StatusProvider.KEY_CREATEDAT, st.getCreatedAt().getTime());
+				try {
+					getApplicationContext().getContentResolver().insert(StatusProvider.CONTENT_URI, values);
+				} catch (SQLiteConstraintException e) {
+					continue;
 				}
+				total++;
 			}
+			// Apagar as mensagens mais antigas
 			toDelete = total - maxListItems;
-			if(toDelete > 0) {
-				datasource.deleteLastRows(toDelete);
-			}
+			String where = StatusProvider.KEY_ID + " IN (SELECT " + StatusProvider.KEY_ID + " FROM " + StatusProvider.T_TIMELINE + " ORDER BY " + StatusProvider.KEY_ID + " LIMIT " + toDelete + ")";
+			getApplicationContext().getContentResolver().delete(StatusProvider.CONTENT_URI, where, null);
+			
 			// Criar uma notificao com as mensagens nao lidas
 			sendNotification(toDelete);
 			
@@ -94,11 +108,5 @@ public class TimelinePull extends IntentService {
 		notification.contentIntent = pending;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.notify(STATUSBAR_ID, notification);
-	}
-	
-	@Override
-	public void onDestroy() {
-		datasource.close();
-		super.onDestroy();
 	}
 }

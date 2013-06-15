@@ -4,7 +4,6 @@
 package com.grupo5.trabetapa1.main;
 
 import winterwell.jtwitter.Twitter;
-import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
@@ -18,7 +17,6 @@ import com.grupo5.trabetapa1.services.StatusUpload;
 import com.grupo5.trabetapa1.services.TimelinePull;
 import com.grupo5.trabetapa1.utils.Connectivity;
 
-@SuppressLint("HandlerLeak")
 public class YambApplication extends Application implements OnSharedPreferenceChangeListener  {
 	public static final String EXTRA_MESSENGER = "TimeLineMessenger";	
 	private static final String TAG = YambApplication.class.getSimpleName();

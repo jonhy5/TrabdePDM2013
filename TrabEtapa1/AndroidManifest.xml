@@ -68,5 +68,9 @@
             android:name="com.grupo5.trabetapa1.activities.UserInfoActivity"
             android:label="@string/title_activity_user_info" >
         </activity>
+        <provider
+      		android:name="com.grupo5.trabetapa1.contentprovider.StatusProvider"
+      		android:authorities="com.grupo5.trabetapa1.contentprovider" >
+   		</provider>
     </application>
 </manifest>
